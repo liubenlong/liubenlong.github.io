@@ -1,0 +1,1062 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="WLToZMA79kBxfsP1Say3eTAfvvxCiaEBjQlxFgqEl-k" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="环境搭建,ELK,elasticsearch,kibana,logstash,nginx," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="快乐崇拜的技术博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="简介由于公司没有日志收集系统，所以之前搭建了一个ELK日志收集分析系统，如此一来查询日志就方便了很多，再加上ELK的一些方便实用的索引分析功能，可以将数据已图表形式展现，一目了然。
+网上好多都是采用了ELK+redis的架构，但考虑到目前公司业务不是很多，所以没有加入redis一层
+
+
+ELK的安装请参考我上一篇文章 ELK环境搭建
+
+日志收集配置其实你的ELK系统搭建完成以后，剩下的主要就是lo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ELK 之 nginx日志分析（原创）">
+<meta property="og:url" content="ttp://liubenlong.github.io/2016/11/29/ELK/ELK 之 nginx日志分析/index.html">
+<meta property="og:site_name" content="快乐崇拜的技术博客">
+<meta property="og:description" content="简介由于公司没有日志收集系统，所以之前搭建了一个ELK日志收集分析系统，如此一来查询日志就方便了很多，再加上ELK的一些方便实用的索引分析功能，可以将数据已图表形式展现，一目了然。
+网上好多都是采用了ELK+redis的架构，但考虑到目前公司业务不是很多，所以没有加入redis一层
+
+
+ELK的安装请参考我上一篇文章 ELK环境搭建
+
+日志收集配置其实你的ELK系统搭建完成以后，剩下的主要就是lo">
+<meta property="og:image" content="http://i.imgur.com/EkD3F9G.png">
+<meta property="og:image" content="http://i.imgur.com/WCmBdF9.jpg">
+<meta property="og:updated_time" content="2016-11-29T03:28:41.079Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ELK 之 nginx日志分析（原创）">
+<meta name="twitter:description" content="简介由于公司没有日志收集系统，所以之前搭建了一个ELK日志收集分析系统，如此一来查询日志就方便了很多，再加上ELK的一些方便实用的索引分析功能，可以将数据已图表形式展现，一目了然。
+网上好多都是采用了ELK+redis的架构，但考虑到目前公司业务不是很多，所以没有加入redis一层
+
+
+ELK的安装请参考我上一篇文章 ELK环境搭建
+
+日志收集配置其实你的ELK系统搭建完成以后，剩下的主要就是lo">
+<meta name="twitter:image" content="http://i.imgur.com/EkD3F9G.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6348339029733279000',
+      author: '快乐崇拜'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="ttp://liubenlong.github.io/2016/11/29/ELK/ELK 之 nginx日志分析/"/>
+
+
+
+
+
+  <title> ELK 之 nginx日志分析（原创） | 快乐崇拜的技术博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?a686d1d6b919625dda47c9080aeec33c";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="//s95.cnzz.com/z_stat.php?id=1260742521&web_id=1260742521" language="JavaScript"></script>
+  </div>
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">快乐崇拜的技术博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">聪明出于勤奋，天才在于积累</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/baidusitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            Sitemap
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'GyvWakwgjTatLyRq_bti','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="ttp://liubenlong.github.io/2016/11/29/ELK/ELK 之 nginx日志分析/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="liubenlong">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/touxiang.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="快乐崇拜的技术博客">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="快乐崇拜的技术博客" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                ELK 之 nginx日志分析（原创）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-29T00:00:00+08:00">
+                2016-11-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ELK/" itemprop="url" rel="index">
+                    <span itemprop="name">ELK</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2016/11/29/ELK/ELK 之 nginx日志分析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/29/ELK/ELK 之 nginx日志分析/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>由于公司没有日志收集系统，所以之前搭建了一个ELK日志收集分析系统，如此一来查询日志就方便了很多，再加上ELK的一些方便实用的索引分析功能，可以将数据已图表形式展现，一目了然。</p>
+<p>网上好多都是采用了ELK+redis的架构，但考虑到目前公司业务不是很多，所以没有加入redis一层</p>
+<p><img src="http://i.imgur.com/EkD3F9G.png" alt=""></p>
+<blockquote>
+<p>ELK的安装请参考我上一篇文章 <a href="http://liubenlong.github.io/2016/11/24/ELK-ELK%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">ELK环境搭建</a></p>
+</blockquote>
+<h1 id="日志收集配置"><a href="#日志收集配置" class="headerlink" title="日志收集配置"></a>日志收集配置</h1><p>其实你的ELK系统搭建完成以后，剩下的主要就是logstash收集配置的编写以及整个系统的性能调优了，性能调优后续在写。<br>这里会逐步说明配置的一些含义，后面会将完整配置贴出。</p>
+<p>nginx日志是自定义的格式，所以需要用logstash将message格式化存储到ES中，这里采用grok过滤器，使用match正则表达式解析，根据自己的log_format定制。</p>
+<ol>
+<li>nginx日志</li>
+</ol>
+<ul>
+<li><strong>nginx中log_format的配置</strong></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">log_format  main  &apos;$remote_addr | $time_local | $request | $uri | &apos;</div><div class="line">                      &apos;$status | $body_bytes_sent | $bytes_sent | $gzip_ratio | $http_referer | &apos;</div><div class="line">                      &apos;&quot;$http_user_agent&quot; | $http_x_forwarded_for | $upstream_addr | $upstream_response_time | $upstream_status | $request_time&apos;;</div></pre></td></tr></table></figure>
+<ul>
+<li><strong>输出的日志</strong></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">IP地址 | 29/Nov/2016:10:25:16 +0800 | POST /api HTTP/1.1 | /api | 200 | 108 | 326 | - | - | &quot;UGCLehiGphoneClient/2.9.0 Mozilla/5.0 (Linux; Android 5.0.2; X800 Build/BBXCNOP5500710201S) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/37.0.0.0 Mobile Safari/537.36&quot; | - | IP地址:端口号 | 0.058 | 200 | 0.058</div></pre></td></tr></table></figure>
+<ol>
+<li>编写正则表达式</li>
+</ol>
+<blockquote>
+<p>这里可以借助<a href="https://grokdebug.herokuapp.com/" target="_blank" rel="external">grop官网的debugger</a>和<a href="https://grokdebug.herokuapp.com/patterns#" target="_blank" rel="external">patterns</a>来快速帮助我们写正则表达式</p>
+</blockquote>
+<p>对应上面输出的日志，我写的正则表达式如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">%&#123;IPORHOST:clientip&#125; \| %&#123;HTTPDATE:timestamp&#125; \| (?:%&#123;WORD:verb&#125; %&#123;NOTSPACE:request&#125;(?: HTTP/%&#123;NUMBER:http_version&#125;)?|-) \| %&#123;URIPATH:uripath&#125; \| %&#123;NUMBER:response&#125; \| (?:%&#123;NUMBER:body_bytes_sent&#125;|-) \| (?:%&#123;NUMBER:bytes_sent&#125;|-) \| (?:%&#123;NOTSPACE:gzip_ratio&#125;|-) \| (?:%&#123;QS:http_referer&#125;|-) \| %&#123;QS:agent&#125; \| (?:%&#123;QS:http_x_forwarded_for&#125;|-) \| (%&#123;URIHOST:upstream_addr&#125;|-) \| (%&#123;BASE16FLOAT:upstream_response_time&#125;) \| %&#123;NUMBER:upstream_status&#125; \| (%&#123;BASE16FLOAT:request_time&#125;)</div></pre></td></tr></table></figure>
+<p>在<a href="https://grokdebug.herokuapp.com/" target="_blank" rel="external">grop官网的debugger</a>解析结果如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  &quot;clientip&quot;: [</div><div class="line">    [</div><div class="line">      &quot;10.73.134.29&quot;</div><div class="line">    ]</div><div class="line">  ],</div><div class="line">  &quot;HOSTNAME&quot;: [</div><div class="line">    [</div><div class="line">      &quot;10.73.134.29&quot;,</div><div class="line">      &quot;117.121.58.159&quot;</div><div class="line">    ]</div><div class="line">  ],</div><div class="line">  &quot;IP&quot;: [</div><div class="line">    [</div><div class="line">      null,</div><div class="line">      null</div><div class="line">    ]</div><div class="line">  ],</div><div class="line">  &quot;IPV6&quot;: [</div><div class="line">    [</div><div class="line">      null,</div><div class="line">      null</div><div class="line">    ]</div><div class="line">  ],</div><div class="line">  &quot;IPV4&quot;: [</div><div class="line">    [</div><div class="line">      null,</div><div class="line">      null</div><div class="line">    ]</div><div class="line">  ],</div><div class="line">  &quot;timestamp&quot;: [</div><div class="line">    [</div><div class="line">      &quot;28/Nov/2016:16:13:07 +0800&quot;</div><div class="line">    ]</div><div class="line">  ],</div><div class="line">  &quot;MONTHDAY&quot;: [</div><div class="line">    [</div><div class="line">      &quot;28&quot;</div><div class="line">    ]</div><div class="line">  ],</div><div class="line">  &quot;MONTH&quot;: [</div><div class="line">    [</div><div class="line">      &quot;Nov&quot;</div><div class="line">    ]</div><div class="line">  ],</div><div class="line">  &quot;YEAR&quot;: [</div><div class="line">    [</div><div class="line">      &quot;2016&quot;</div><div class="line">    ]</div><div class="line">  ],</div><div class="line">  &quot;TIME&quot;: [</div><div class="line">    [</div><div class="line">      &quot;16:13:07&quot;</div><div class="line">    ]</div><div class="line">  ],</div><div class="line">  &quot;HOUR&quot;: [</div><div class="line">    [</div><div class="line">      &quot;16&quot;</div><div class="line">    ]</div><div class="line">  ],</div><div class="line">  &quot;MINUTE&quot;: [</div><div class="line">    [</div><div class="line">      &quot;13&quot;</div><div class="line">    ]</div><div class="line">  ],</div><div class="line">  &quot;SECOND&quot;: [</div><div class="line">    [</div><div class="line">      &quot;07&quot;</div><div class="line">    ]</div><div class="line">  ],</div><div class="line">  &quot;INT&quot;: [</div><div class="line">    [</div><div class="line">      &quot;+0800&quot;</div><div class="line">    ]</div><div class="line">  ],</div><div class="line">  &quot;verb&quot;: [</div><div class="line">    [</div><div class="line">      &quot;POST&quot;</div><div class="line">    ]</div><div class="line">  ],</div><div class="line">  &quot;request&quot;: [</div><div class="line">    [</div><div class="line">      &quot;/inner&quot;</div><div class="line">    ]</div><div class="line">  ],</div><div class="line">  &quot;http_version&quot;: [</div><div class="line">    [</div><div class="line">      &quot;1.1&quot;</div><div class="line">    ]</div><div class="line">  ],</div><div class="line">  &quot;BASE10NUM&quot;: [</div><div class="line">    [</div><div class="line">      &quot;1.1&quot;,</div><div class="line">      &quot;200&quot;,</div><div class="line">      &quot;243&quot;,</div><div class="line">      &quot;461&quot;,</div><div class="line">      &quot;200&quot;</div><div class="line">    ]</div><div class="line">  ],</div><div class="line">  &quot;uripath&quot;: [</div><div class="line">    [</div><div class="line">      &quot;/inner&quot;</div><div class="line">    ]</div><div class="line">  ],</div><div class="line">  &quot;response&quot;: [</div><div class="line">    [</div><div class="line">      &quot;200&quot;</div><div class="line">    ]</div><div class="line">  ],</div><div class="line">  &quot;body_bytes_sent&quot;: [</div><div class="line">    [</div><div class="line">      &quot;243&quot;</div><div class="line">    ]</div><div class="line">  ],</div><div class="line">  &quot;bytes_sent&quot;: [</div><div class="line">    [</div><div class="line">      &quot;461&quot;</div><div class="line">    ]</div><div class="line">  ],</div><div class="line">  &quot;gzip_ratio&quot;: [</div><div class="line">    [</div><div class="line">      &quot;-&quot;</div><div class="line">    ]</div><div class="line">  ],</div><div class="line">  &quot;http_referer&quot;: [</div><div class="line">    [</div><div class="line">      null</div><div class="line">    ]</div><div class="line">  ],</div><div class="line">  &quot;QUOTEDSTRING&quot;: [</div><div class="line">    [</div><div class="line">      null,</div><div class="line">      &quot;&quot;-&quot;&quot;,</div><div class="line">      null</div><div class="line">    ]</div><div class="line">  ],</div><div class="line">  &quot;agent&quot;: [</div><div class="line">    [</div><div class="line">      &quot;&quot;-&quot;&quot;</div><div class="line">    ]</div><div class="line">  ],</div><div class="line">  &quot;http_x_forwarded_for&quot;: [</div><div class="line">    [</div><div class="line">      null</div><div class="line">    ]</div><div class="line">  ],</div><div class="line">  &quot;upstream_addr&quot;: [</div><div class="line">    [</div><div class="line">      &quot;117.121.58.159:8001&quot;</div><div class="line">    ]</div><div class="line">  ],</div><div class="line">  &quot;IPORHOST&quot;: [</div><div class="line">    [</div><div class="line">      &quot;117.121.58.159&quot;</div><div class="line">    ]</div><div class="line">  ],</div><div class="line">  &quot;port&quot;: [</div><div class="line">    [</div><div class="line">      &quot;8001&quot;</div><div class="line">    ]</div><div class="line">  ],</div><div class="line">  &quot;upstream_response_time&quot;: [</div><div class="line">    [</div><div class="line">      &quot;0.046&quot;</div><div class="line">    ]</div><div class="line">  ],</div><div class="line">  &quot;upstream_status&quot;: [</div><div class="line">    [</div><div class="line">      &quot;200&quot;</div><div class="line">    ]</div><div class="line">  ],</div><div class="line">  &quot;request_time&quot;: [</div><div class="line">    [</div><div class="line">      &quot;0.046&quot;</div><div class="line">    ]</div><div class="line">  ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li>地理坐标分析-geoip</li>
+</ol>
+<ul>
+<li>安装geoip数据库</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cd 你的logstash地址/logstash/etc</div><div class="line">curl -O &quot;http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz&quot;</div><div class="line">gunzip GeoLiteCity.dat.gz</div></pre></td></tr></table></figure>
+<ul>
+<li>配置logstash使用GeoIP</li>
+</ul>
+<p>只需要在filter里配置即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">#地理坐标分析</div><div class="line">geoip &#123;</div><div class="line">	source =&gt; &quot;clientip&quot;</div><div class="line">	##这里指定好解压后GeoIP数据库文件的位置</div><div class="line">	database =&gt; &quot;替换为你的文件路径/logstash-2.4.1/etc/GeoLiteCity.dat&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li><strong> GeoIP使用注意事项</strong></li>
+</ul>
+<p>如果你出现下面的错误<br><img src="http://i.imgur.com/WCmBdF9.jpg" alt=""></p>
+<p>报错<code>No Compatible Fields: The “[nginx-access-]YYYY-MM” index pattern does not contain any of the following field types: geo_point</code></p>
+<p>原因：索引格式为[nginx-access-]YYYY-MM的日志文件由logstash输出到Elasticsearch；在 elasticsearch 中，所有的数据都有一个类型，什么样的类型，就可以在其上做一些对应类型的特殊操作。geo信息中的location字段是经纬度，我们需要使用经纬度来定位地理位置；在 elasticsearch 中，对于经纬度来说，要想使用 elasticsearch 提供的地理位置查询相关的功能，就需要构造一个结构，并且将其类型属性设置为geo_point，此错误明显是由于我们的geo的location字段类型不是geo_point。</p>
+<p><strong>解决方法：</strong>Elasticsearch 支持给索引预定义设置和 mapping(前提是你用的 elasticsearch 版本支持这个 API，不过估计应该都支持)。其实ES中已经有一个默认预定义的模板，我们只要使用预定的模板即可，我们在ES中看下模板。简而言之就是<strong>output的index名称，必须以<code>logstash-</code>开头</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">output &#123;</div><div class="line">	if [type] == &quot;nginx_lehi_access&quot; &#123; #nginx-access</div><div class="line">		elasticsearch &#123;</div><div class="line">			action =&gt; &quot;index&quot;          #The operation on ES</div><div class="line">			hosts  =&gt; [替换为你的ES服务器列表，字符串数组格式]   #ElasticSearch host, can be array.</div><div class="line">			index  =&gt; &quot;logstash-nginx_lehi_access&quot;         #The index to write data to.</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="logstash完整配置文件"><a href="#logstash完整配置文件" class="headerlink" title="logstash完整配置文件"></a>logstash完整配置文件</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div></pre></td><td class="code"><pre><div class="line">input &#123;</div><div class="line">	file &#123;</div><div class="line">		type =&gt; &quot;nginx_lehi_access&quot;  </div><div class="line">        #监听文件的路径</div><div class="line">        path =&gt; &quot;替换为你的日志文件路径/access.log&quot;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">filter &#123;</div><div class="line">	if [type] == &quot;nginx_lehi_access&quot; &#123;</div><div class="line">		#定义数据的格式</div><div class="line">		grok &#123;</div><div class="line">			match =&gt; [</div><div class="line">				&quot;message&quot;, &quot;%&#123;IPORHOST:clientip&#125; \| %&#123;HTTPDATE:timestamp&#125; \| (?:%&#123;WORD:verb&#125; %&#123;NOTSPACE:request&#125;(?: HTTP/%&#123;NUMBER:http_version&#125;)?|-) \| %&#123;URIPATH:uripath&#125; \| %&#123;NUMBER:response&#125; \| (?:%&#123;NUMBER:body_bytes_sent&#125;|-) \| (?:%&#123;NUMBER:bytes_sent&#125;|-) \| (?:%&#123;NOTSPACE:gzip_ratio&#125;|-) \| (?:%&#123;QS:http_referer&#125;|-) \| %&#123;QS:user_agent&#125; \| (?:%&#123;QS:http_x_forwarded_for&#125;|-) \| (%&#123;URIHOST:upstream_addr&#125;|-) \| (%&#123;BASE16FLOAT:upstream_response_time&#125;) \| %&#123;NUMBER:upstream_status&#125; \| (%&#123;BASE16FLOAT:request_time&#125;)&quot;</div><div class="line">			]</div><div class="line">		&#125;</div><div class="line">		#定义时间戳的格式</div><div class="line">		date &#123;</div><div class="line">			match =&gt; [ &quot;timestamp&quot; , &quot;dd/MMM/YYYY:HH:mm:ss Z&quot; ]</div><div class="line">		&#125;</div><div class="line">		#地理坐标分析</div><div class="line">		geoip &#123;</div><div class="line">			source =&gt; &quot;clientip&quot;</div><div class="line">			##这里指定好解压后GeoIP数据库文件的位置</div><div class="line">			database =&gt; &quot;替换为你的文件路径/logstash-2.4.1/etc/GeoLiteCity.dat&quot;</div><div class="line">		&#125;</div><div class="line">		#同样地还有客户端的UA，由于UA的格式比较多，logstash也会自动去分析，提取操作系统等相关信息</div><div class="line">		#定义客户端设备是哪一个字段</div><div class="line">		useragent &#123;</div><div class="line">			source =&gt; &quot;user_agent&quot;</div><div class="line">			target =&gt; &quot;userAgent&quot;</div><div class="line">		&#125;</div><div class="line">		#把所有字段进行urldecode（显示中文）</div><div class="line">		urldecode &#123;</div><div class="line">			all_fields =&gt; true</div><div class="line">		&#125;</div><div class="line">		#需要进行转换的字段，这里是将访问的时间转成int，再传给Elasticsearch。注：似乎没有double，只有float，这里我没有深入研究，总之写double不对。</div><div class="line">		mutate &#123;</div><div class="line">			gsub =&gt; [&quot;user_agent&quot;,&quot;[\&quot;]&quot;,&quot;&quot;]        #将user_agent中的 &quot; 换成空</div><div class="line">			convert =&gt; [ &quot;response&quot;,&quot;integer&quot; ]</div><div class="line">			convert =&gt; [ &quot;body_bytes_sent&quot;,&quot;integer&quot; ]</div><div class="line">			convert =&gt; [ &quot;bytes_sent&quot;,&quot;integer&quot; ]</div><div class="line">			convert =&gt; [ &quot;upstream_response_time&quot;,&quot;float&quot; ]</div><div class="line">			convert =&gt; [ &quot;upstream_status&quot;,&quot;integer&quot; ]</div><div class="line">			convert =&gt; [ &quot;request_time&quot;,&quot;float&quot; ]</div><div class="line">			convert =&gt; [ &quot;port&quot;,&quot;integer&quot; ]</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">output &#123;</div><div class="line">	if [type] == &quot;nginx_lehi_access&quot; &#123; #nginx-access</div><div class="line">		elasticsearch &#123;</div><div class="line">			action =&gt; &quot;index&quot;          #The operation on ES</div><div class="line">			hosts  =&gt; [替换为你的ES服务器列表，字符串数组格式]   #ElasticSearch host, can be array.</div><div class="line">			index  =&gt; &quot;logstash-nginx_lehi_access&quot;         #The index to write data to.</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="ES数据查看"><a href="#ES数据查看" class="headerlink" title="ES数据查看"></a>ES数据查看</h2><p>到此，就可以在ES中查看具体解析出来的数据是什么样子的了</p>
+<p>进入<code>http://你的IP：PORT/_plugin/head/</code>，点击<code>数据浏览</code>，找到你的nginx索引，选一条点击查看生成的索引原始数据：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	&quot;_index&quot;: &quot;logstash-nginx_lehi_access&quot;,</div><div class="line">	&quot;_type&quot;: &quot;nginx_lehi_access&quot;,</div><div class="line">	&quot;_id&quot;: &quot;AViqy6DEzXT_yrqr__Ka&quot;,</div><div class="line">	&quot;_version&quot;: 1,</div><div class="line">	&quot;_score&quot;: 1,</div><div class="line">	&quot;_source&quot;: &#123;</div><div class="line">		&quot;message&quot;: &quot;116.226.72.255 | 28/Nov/2016:19:57:00 +0800 | POST /api HTTP/1.1 | /api | 200 | 1314 | 1533 | - | - | &quot;Dalvik/2.1.0(Linux;U;Android6.0;LetvX501Build/DBXCNOP5801810092S)&quot; | - | 117.121.58.159:8001 | 0.023 | 200 | 0.023&quot;,</div><div class="line">		&quot;@version&quot;: &quot;1&quot;,</div><div class="line">		&quot;@timestamp&quot;: &quot;2016-11-28T11:57:00.000Z&quot;,</div><div class="line">		&quot;path&quot;: &quot;/letv/logs/nginx/lehi/access.log&quot;,</div><div class="line">		&quot;host&quot;: &quot;vm-29-19-pro01-bgp.bj-cn.vpc.letv.cn&quot;,</div><div class="line">		&quot;type&quot;: &quot;nginx_lehi_access&quot;,</div><div class="line">		&quot;clientip&quot;: &quot;116.226.72.255&quot;,</div><div class="line">		&quot;timestamp&quot;: &quot;28/Nov/2016:19:57:00 +0800&quot;,</div><div class="line">		&quot;verb&quot;: &quot;POST&quot;,</div><div class="line">		&quot;request&quot;: &quot;/api&quot;,</div><div class="line">		&quot;http_version&quot;: &quot;1.1&quot;,</div><div class="line">		&quot;uripath&quot;: &quot;/api&quot;,</div><div class="line">		&quot;response&quot;: 200,</div><div class="line">		&quot;body_bytes_sent&quot;: 1314,</div><div class="line">		&quot;bytes_sent&quot;: 1533,</div><div class="line">		&quot;gzip_ratio&quot;: &quot;-&quot;,</div><div class="line">		&quot;user_agent&quot;: &quot;Dalvik/2.1.0 (Linux; U; Android 6.0; Letv X501 Build/DBXCNOP5801810092S)&quot;,</div><div class="line">		&quot;upstream_addr&quot;: &quot;117.121.58.159:8001&quot;,</div><div class="line">		&quot;port&quot;: 8001,</div><div class="line">		&quot;upstream_response_time&quot;: 0.023,</div><div class="line">		&quot;upstream_status&quot;: 200,</div><div class="line">		&quot;request_time&quot;: 0.023,</div><div class="line">		&quot;geoip&quot;: &#123;</div><div class="line">			&quot;ip&quot;: &quot;116.226.72.255&quot;,</div><div class="line">			&quot;country_code2&quot;: &quot;CN&quot;,</div><div class="line">			&quot;country_code3&quot;: &quot;CHN&quot;,</div><div class="line">			&quot;country_name&quot;: &quot;China&quot;,</div><div class="line">			&quot;continent_code&quot;: &quot;AS&quot;,</div><div class="line">			&quot;region_name&quot;: &quot;23&quot;,</div><div class="line">			&quot;city_name&quot;: &quot;Shanghai&quot;,</div><div class="line">			&quot;latitude&quot;: 31.045600000000007,</div><div class="line">			&quot;longitude&quot;: 121.3997,</div><div class="line">			&quot;timezone&quot;: &quot;Asia/Shanghai&quot;,</div><div class="line">			&quot;real_region_name&quot;: &quot;Shanghai&quot;,</div><div class="line">			&quot;location&quot;: [121.3997,</div><div class="line">			31.045600000000007]</div><div class="line">		&#125;,</div><div class="line">		&quot;userAgent&quot;: &#123;</div><div class="line">			&quot;name&quot;: &quot;Android&quot;,</div><div class="line">			&quot;os&quot;: &quot;Android 6.0&quot;,</div><div class="line">			&quot;os_name&quot;: &quot;Android&quot;,</div><div class="line">			&quot;os_major&quot;: &quot;6&quot;,</div><div class="line">			&quot;os_minor&quot;: &quot;0&quot;,</div><div class="line">			&quot;device&quot;: &quot;Letv X501&quot;,</div><div class="line">			&quot;major&quot;: &quot;6&quot;,</div><div class="line">			&quot;minor&quot;: &quot;0&quot;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="kibana图表生成分析"><a href="#kibana图表生成分析" class="headerlink" title="kibana图表生成分析"></a>kibana图表生成分析</h2><blockquote>
+<p>这里请参考<a href="http://blog.csdn.net/wmj2004/article/details/53216018" target="_blank" rel="external">logstash日志分析的配置和使用(设计模板)</a></p>
+</blockquote>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol>
+<li>logstash在启动时报错：默认是4个线程，但是只能创建一个线程。</li>
+</ol>
+<p>这是同一个<code>log4j_to_es.conf</code>配置了多个<code>input-file</code>并且配置了<code>multiline</code>后出现的问题，应该把<code>multiline</code>配置从filter中移动到input中去：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">file &#123;</div><div class="line">	type =&gt; &quot;whatsliveapi&quot;</div><div class="line">    #监听文件的路径</div><div class="line">    path =&gt; &quot;/letv/logs/apps/api/whatslive/api_8001.log&quot;</div><div class="line">	codec =&gt; multiline &#123;</div><div class="line">	   pattern =&gt; &quot;^\d&#123;4&#125;-\d&#123;1,2&#125;-\d&#123;1,2&#125;\s\d&#123;1,2&#125;:\d&#123;1,2&#125;:\d&#123;1,2&#125;&quot;</div><div class="line">	   negate =&gt; true</div><div class="line">	   what =&gt; &quot;previous&quot;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li>在kibana中无法选择geoip以及userAgent的字段</li>
+</ol>
+<p>解决办法：进入<em>kibana-settings-indices</em>,点击你的索引，然后点击<strong>刷新按钮</strong>即可</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
+<li><a href="http://blog.csdn.net/wmj2004/article/details/53216018" target="_blank" rel="external">logstash日志分析的配置和使用(设计模板)</a></li>
+<li><a href="http://blog.csdn.net/yanggd1987/article/details/50469113" target="_blank" rel="external">Kibana的图形化——Tile Map</a></li>
+<li><a href="http://www.cnblogs.com/yjf512/p/4199105.html" target="_blank" rel="external">使用elk+redis搭建nginx日志分析平台</a></li>
+<li><a href="http://www.wklken.me/posts/2015/04/26/elk-for-nginx-log.html" target="_blank" rel="external">LOGSTASH+ELASTICSEARCH+KIBANA处理NGINX访问日志</a></li>
+<li><a href="http://www.cnblogs.com/Orgliny/p/5592186.html" target="_blank" rel="external">ogstash使用grok过滤nginx日志（二）</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/pay/weixin.png" alt="liubenlong WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/pay/zhifubao.png" alt="liubenlong Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/环境搭建/" rel="tag"># 环境搭建</a>
+          
+            <a href="/tags/ELK/" rel="tag"># ELK</a>
+          
+            <a href="/tags/elasticsearch/" rel="tag"># elasticsearch</a>
+          
+            <a href="/tags/kibana/" rel="tag"># kibana</a>
+          
+            <a href="/tags/logstash/" rel="tag"># logstash</a>
+          
+            <a href="/tags/nginx/" rel="tag"># nginx</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/29/java高并发/Disruptor/disruptor学习教程（二）为什么快/" rel="next" title="ELK 之 nginx日志分析（原创）">
+                <i class="fa fa-chevron-left"></i> ELK 之 nginx日志分析（原创）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/05/redis/Redis学习（一）redis3.2.5集群搭建/" rel="prev" title="Redis学习（一）redis3.2.5集群搭建.md">
+                Redis学习（一）redis3.2.5集群搭建.md <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/11/29/ELK/ELK 之 nginx日志分析/"
+           data-title="ELK 之 nginx日志分析（原创）" data-url="ttp://liubenlong.github.io/2016/11/29/ELK/ELK 之 nginx日志分析/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/touxiang.jpg"
+               alt="liubenlong" />
+          <p class="site-author-name" itemprop="name">liubenlong</p>
+          <p class="site-description motion-element" itemprop="description">聪明出于勤奋，天才在于积累</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#日志收集配置"><span class="nav-number">2.</span> <span class="nav-text">日志收集配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#logstash完整配置文件"><span class="nav-number">2.1.</span> <span class="nav-text">logstash完整配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ES数据查看"><span class="nav-number">2.2.</span> <span class="nav-text">ES数据查看</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kibana图表生成分析"><span class="nav-number">2.3.</span> <span class="nav-text">kibana图表生成分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意事项"><span class="nav-number">2.4.</span> <span class="nav-text">注意事项</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">liubenlong</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"helloword"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+</body>
+</html>
