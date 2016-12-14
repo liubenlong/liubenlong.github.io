@@ -102,7 +102,9 @@ hexo new page &amp;quot;pageName&amp;quot; #新建页面
 hexo generate #生成静态页面至public目录
 hexo server #开启预览访问端口（默认端口4000，&amp;apos;ctrl + c&amp;apos;关闭server）
 hexo deploy #将.deploy目录部署到G">
-<meta property="og:updated_time" content="2016-12-14T06:34:08.595Z">
+<meta property="og:image" content="http://liubenlong.github.io/images/QQ截图20161214145442.png">
+<meta property="og:image" content="http://liubenlong.github.io/images/QQ截图20161214150332.png">
+<meta property="og:updated_time" content="2016-12-14T07:09:21.412Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hexo+github博客环境搭建">
 <meta name="twitter:description" content="常用命令hexo new &amp;quot;postName&amp;quot; #新建文章
@@ -110,6 +112,7 @@ hexo new page &amp;quot;pageName&amp;quot; #新建页面
 hexo generate #生成静态页面至public目录
 hexo server #开启预览访问端口（默认端口4000，&amp;apos;ctrl + c&amp;apos;关闭server）
 hexo deploy #将.deploy目录部署到G">
+<meta name="twitter:image" content="http://liubenlong.github.io/images/QQ截图20161214145442.png">
 
 
 
@@ -452,7 +455,18 @@ hexo n == hexo new
 hexo g == hexo generate
 hexo s == hexo server
 hexo d == hexo deploy
-</code></pre><h1 id="引用本地图片问题"><a href="#引用本地图片问题" class="headerlink" title="引用本地图片问题"></a>引用本地图片问题</h1><p>由于本人不会nodejs，所以写了一个java版本的图片迁移工具，直接在hexo博客目录下运行 <code>java -jar hexo_lbl-1.0-SNAPSHOT.jar</code> 即可<br>改jar包以及源代码已经提交到github上 <a href="https://github.com/liubenlong/hexo-blog" target="_blank" rel="external">https://github.com/liubenlong/hexo-blog</a></p>
+</code></pre><h1 id="添加百度站点注意事项"><a href="#添加百度站点注意事项" class="headerlink" title="添加百度站点注意事项"></a>添加百度站点注意事项</h1><ol>
+<li>安装插件<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm install hexo-generator-sitemap --save</div><div class="line">npm install hexo-generator-baidu-sitemap --save</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>然后重启服务，访问<code>http://localhost:4000/baidusitemap.xml</code>即可看到生产的站点地图</p>
+<blockquote>
+<p>我这里没有生成<code>sitemap.xml</code>只生成了<code>baidusitemap.xml</code>。不过没有影响</p>
+</blockquote>
+<ol>
+<li>进入<code>http://zhanzhang.baidu.com/</code>添加站点以及配置网页抓取<br><img src="http://liubenlong.github.io/images/QQ截图20161214145442.png" alt=""><br>这里推荐自动推送和sitemap结合使用。<code>next</code>主题可以配置一下自动推送<code>baidu_push: true</code></li>
+</ol>
+<p>检查百度站点是否成功<br><img src="http://liubenlong.github.io/images/QQ截图20161214150332.png" alt=""></p>
 <blockquote>
 <p>注意 往github上发布之前，要先安装插件  <code>npm install hexo-deployer-git --save</code></p>
 </blockquote>
@@ -516,8 +530,8 @@ hexo d == hexo deploy
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/11/22/spring/spring boot/springboot由浅入深（一）HelloWord/" rel="next" title="springboot由浅入深（一）helloWord">
-                <i class="fa fa-chevron-left"></i> springboot由浅入深（一）helloWord
+              <a href="/2016/08/10/JDK源码深入学习/关于Integer数值比较的问题以及不可变对象/" rel="next" title="关于Integer数值比较的问题以及不可变对象">
+                <i class="fa fa-chevron-left"></i> 关于Integer数值比较的问题以及不可变对象
               </a>
             
           </div>
@@ -526,8 +540,8 @@ hexo d == hexo deploy
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/11/24/ELK/ELK环境搭建/" rel="prev" title="ELK环境搭建（原创）">
-                ELK环境搭建（原创） <i class="fa fa-chevron-right"></i>
+              <a href="/2016/11/22/spring/spring boot/springboot由浅入深（一）HelloWord/" rel="prev" title="springboot由浅入深（一）helloWord">
+                springboot由浅入深（一）helloWord <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -685,7 +699,7 @@ hexo d == hexo deploy
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#常用命令"><span class="nav-number">1.</span> <span class="nav-text">常用命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#引用本地图片问题"><span class="nav-number">2.</span> <span class="nav-text">引用本地图片问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#常用命令"><span class="nav-number">1.</span> <span class="nav-text">常用命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#添加百度站点注意事项"><span class="nav-number">2.</span> <span class="nav-text">添加百度站点注意事项</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
 
           </div>
@@ -724,7 +738,6 @@ hexo d == hexo deploy
     NexT.Pisces
   </a>
 </div>
-
 
         
 

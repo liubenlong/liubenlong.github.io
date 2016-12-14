@@ -89,46 +89,9 @@
       <category term="高并发" scheme="ttp://liubenlong.github.io/categories/%E9%AB%98%E5%B9%B6%E5%8F%91/"/>
     
     
+      <category term="高并发" scheme="ttp://liubenlong.github.io/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/"/>
+    
       <category term="disruptor" scheme="ttp://liubenlong.github.io/tags/disruptor/"/>
-    
-      <category term="高并发" scheme="ttp://liubenlong.github.io/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>akka（二）helloword（原创）</title>
-    <link href="ttp://liubenlong.github.io/2016/12/08/java%E9%AB%98%E5%B9%B6%E5%8F%91/akka/akka%EF%BC%88%E4%BA%8C%EF%BC%89helloword/"/>
-    <id>ttp://liubenlong.github.io/2016/12/08/java高并发/akka/akka（二）helloword/</id>
-    <published>2016-12-07T16:00:00.000Z</published>
-    <updated>2016-12-14T03:52:00.666Z</updated>
-    
-    <content type="html"><![CDATA[<p>本示例来自于官方示例（<a href="http://doc.akka.io/docs/akka/2.4.4/intro/getting-started.html）：" target="_blank" rel="external">http://doc.akka.io/docs/akka/2.4.4/intro/getting-started.html）：</a><br>文中找到 Using Akka with Maven 。点击“Akka Main in Java”下载示例。</p>
-<p><a href="http://www.lightbend.com/activator/template/akka-sample-main-java" target="_blank" rel="external">http://www.lightbend.com/activator/template/akka-sample-main-java</a></p>
-<p><img src="http://liubenlong.github.io/images/77d1dac8-bbf6-4cf2-95e5-7354849dd74c.png" alt=""></p>
-<blockquote>
-<p>注意：新版本的akka需要使用jdk8</p>
-</blockquote>
-<p>里面有两个Actor：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> sample.hello;</div><div class="line"></div><div class="line"><span class="keyword">import</span> akka.actor.Props;</div><div class="line"><span class="keyword">import</span> akka.actor.UntypedActor;</div><div class="line"><span class="keyword">import</span> akka.actor.ActorRef;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorld</span> <span class="keyword">extends</span> <span class="title">UntypedActor</span> </span>&#123;</div><div class="line"></div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">preStart</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="comment">// create the greeter actor</span></div><div class="line">    <span class="keyword">final</span> ActorRef greeter = getContext().actorOf(Props.create(Greeter.class), <span class="string">"greeter"</span>);</div><div class="line">    <span class="comment">// tell it to perform the greeting</span></div><div class="line">    greeter.tell(Greeter.Msg.GREET, getSelf());</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onReceive</span><span class="params">(Object msg)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (msg == Greeter.Msg.DONE) &#123;</div><div class="line">      <span class="comment">// when the greeter is done, stop this actor and with it the application</span></div><div class="line">      getContext().stop(getSelf());</div><div class="line">    &#125; <span class="keyword">else</span></div><div class="line">      unhandled(msg);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> sample.hello;</div><div class="line"></div><div class="line"><span class="keyword">import</span> akka.actor.UntypedActor;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Greeter</span> <span class="keyword">extends</span> <span class="title">UntypedActor</span> </span>&#123;</div><div class="line"></div><div class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">enum</span> Msg &#123;</div><div class="line">    GREET, DONE;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onReceive</span><span class="params">(Object msg)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</div><div class="line">    <span class="keyword">if</span> (msg == Msg.GREET) &#123;</div><div class="line">      System.out.println(<span class="string">"Hello World!"</span>);</div><div class="line">      Thread.sleep(<span class="number">1000</span>);</div><div class="line">      getSender().tell(Msg.DONE, getSelf());</div><div class="line">    &#125; <span class="keyword">else</span></div><div class="line">      unhandled(msg);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>main方法<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> sample.hello;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">    akka.Main.main(<span class="keyword">new</span> String[] &#123; HelloWorld.class.getName() &#125;);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>另一种main写法，通过创建actor的方式<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">    ActorSystem system = ActorSystem.create(<span class="string">"Hello"</span>);</div><div class="line">    ActorRef a = system.actorOf(Props.create(HelloWorld.class), <span class="string">"helloWorld"</span>);</div><div class="line">    System.out.println(a.path());</div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
-<p>helloWord示例比较简单，不过多解释</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;本示例来自于官方示例（&lt;a href=&quot;http://doc.akka.io/docs/akka/2.4.4/intro/getting-started.html）：&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://doc.akka.io/do
-    
-    </summary>
-    
-      <category term="akka" scheme="ttp://liubenlong.github.io/categories/akka/"/>
-    
-    
-      <category term="java" scheme="ttp://liubenlong.github.io/tags/java/"/>
-    
-      <category term="高并发" scheme="ttp://liubenlong.github.io/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/"/>
-    
-      <category term="akka" scheme="ttp://liubenlong.github.io/tags/akka/"/>
     
   </entry>
   
@@ -148,9 +111,9 @@
     
       <category term="java" scheme="ttp://liubenlong.github.io/tags/java/"/>
     
-      <category term="高并发" scheme="ttp://liubenlong.github.io/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/"/>
-    
       <category term="akka" scheme="ttp://liubenlong.github.io/tags/akka/"/>
+    
+      <category term="高并发" scheme="ttp://liubenlong.github.io/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/"/>
     
   </entry>
   
@@ -215,9 +178,46 @@
     
       <category term="java" scheme="ttp://liubenlong.github.io/tags/java/"/>
     
+      <category term="akka" scheme="ttp://liubenlong.github.io/tags/akka/"/>
+    
       <category term="高并发" scheme="ttp://liubenlong.github.io/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/"/>
     
+  </entry>
+  
+  <entry>
+    <title>akka（二）helloword（原创）</title>
+    <link href="ttp://liubenlong.github.io/2016/12/08/java%E9%AB%98%E5%B9%B6%E5%8F%91/akka/akka%EF%BC%88%E4%BA%8C%EF%BC%89helloword/"/>
+    <id>ttp://liubenlong.github.io/2016/12/08/java高并发/akka/akka（二）helloword/</id>
+    <published>2016-12-07T16:00:00.000Z</published>
+    <updated>2016-12-14T03:52:00.666Z</updated>
+    
+    <content type="html"><![CDATA[<p>本示例来自于官方示例（<a href="http://doc.akka.io/docs/akka/2.4.4/intro/getting-started.html）：" target="_blank" rel="external">http://doc.akka.io/docs/akka/2.4.4/intro/getting-started.html）：</a><br>文中找到 Using Akka with Maven 。点击“Akka Main in Java”下载示例。</p>
+<p><a href="http://www.lightbend.com/activator/template/akka-sample-main-java" target="_blank" rel="external">http://www.lightbend.com/activator/template/akka-sample-main-java</a></p>
+<p><img src="http://liubenlong.github.io/images/77d1dac8-bbf6-4cf2-95e5-7354849dd74c.png" alt=""></p>
+<blockquote>
+<p>注意：新版本的akka需要使用jdk8</p>
+</blockquote>
+<p>里面有两个Actor：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> sample.hello;</div><div class="line"></div><div class="line"><span class="keyword">import</span> akka.actor.Props;</div><div class="line"><span class="keyword">import</span> akka.actor.UntypedActor;</div><div class="line"><span class="keyword">import</span> akka.actor.ActorRef;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorld</span> <span class="keyword">extends</span> <span class="title">UntypedActor</span> </span>&#123;</div><div class="line"></div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">preStart</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="comment">// create the greeter actor</span></div><div class="line">    <span class="keyword">final</span> ActorRef greeter = getContext().actorOf(Props.create(Greeter.class), <span class="string">"greeter"</span>);</div><div class="line">    <span class="comment">// tell it to perform the greeting</span></div><div class="line">    greeter.tell(Greeter.Msg.GREET, getSelf());</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onReceive</span><span class="params">(Object msg)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (msg == Greeter.Msg.DONE) &#123;</div><div class="line">      <span class="comment">// when the greeter is done, stop this actor and with it the application</span></div><div class="line">      getContext().stop(getSelf());</div><div class="line">    &#125; <span class="keyword">else</span></div><div class="line">      unhandled(msg);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> sample.hello;</div><div class="line"></div><div class="line"><span class="keyword">import</span> akka.actor.UntypedActor;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Greeter</span> <span class="keyword">extends</span> <span class="title">UntypedActor</span> </span>&#123;</div><div class="line"></div><div class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">enum</span> Msg &#123;</div><div class="line">    GREET, DONE;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onReceive</span><span class="params">(Object msg)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</div><div class="line">    <span class="keyword">if</span> (msg == Msg.GREET) &#123;</div><div class="line">      System.out.println(<span class="string">"Hello World!"</span>);</div><div class="line">      Thread.sleep(<span class="number">1000</span>);</div><div class="line">      getSender().tell(Msg.DONE, getSelf());</div><div class="line">    &#125; <span class="keyword">else</span></div><div class="line">      unhandled(msg);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>main方法<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> sample.hello;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">    akka.Main.main(<span class="keyword">new</span> String[] &#123; HelloWorld.class.getName() &#125;);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>另一种main写法，通过创建actor的方式<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">    ActorSystem system = ActorSystem.create(<span class="string">"Hello"</span>);</div><div class="line">    ActorRef a = system.actorOf(Props.create(HelloWorld.class), <span class="string">"helloWorld"</span>);</div><div class="line">    System.out.println(a.path());</div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
+<p>helloWord示例比较简单，不过多解释</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本示例来自于官方示例（&lt;a href=&quot;http://doc.akka.io/docs/akka/2.4.4/intro/getting-started.html）：&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://doc.akka.io/do
+    
+    </summary>
+    
+      <category term="akka" scheme="ttp://liubenlong.github.io/categories/akka/"/>
+    
+    
+      <category term="java" scheme="ttp://liubenlong.github.io/tags/java/"/>
+    
       <category term="akka" scheme="ttp://liubenlong.github.io/tags/akka/"/>
+    
+      <category term="高并发" scheme="ttp://liubenlong.github.io/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/"/>
     
   </entry>
   
@@ -351,8 +351,8 @@
   
   <entry>
     <title>ELK 之 nginx日志分析（原创）</title>
-    <link href="ttp://liubenlong.github.io/2016/11/29/ELK/ELK%20%E4%B9%8B%20nginx%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90/"/>
-    <id>ttp://liubenlong.github.io/2016/11/29/ELK/ELK 之 nginx日志分析/</id>
+    <link href="ttp://liubenlong.github.io/2016/11/29/java%E9%AB%98%E5%B9%B6%E5%8F%91/Disruptor/disruptor%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E4%BA%8C%EF%BC%89%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BF%AB/"/>
+    <id>ttp://liubenlong.github.io/2016/11/29/java高并发/Disruptor/disruptor学习教程（二）为什么快/</id>
     <published>2016-11-28T16:00:00.000Z</published>
     <updated>2016-11-29T03:28:41.079Z</updated>
     
@@ -455,8 +455,8 @@
   
   <entry>
     <title>ELK 之 nginx日志分析（原创）</title>
-    <link href="ttp://liubenlong.github.io/2016/11/29/java%E9%AB%98%E5%B9%B6%E5%8F%91/Disruptor/disruptor%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E4%BA%8C%EF%BC%89%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BF%AB/"/>
-    <id>ttp://liubenlong.github.io/2016/11/29/java高并发/Disruptor/disruptor学习教程（二）为什么快/</id>
+    <link href="ttp://liubenlong.github.io/2016/11/29/ELK/ELK%20%E4%B9%8B%20nginx%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90/"/>
+    <id>ttp://liubenlong.github.io/2016/11/29/ELK/ELK 之 nginx日志分析/</id>
     <published>2016-11-28T16:00:00.000Z</published>
     <updated>2016-11-29T03:28:41.079Z</updated>
     
@@ -652,11 +652,31 @@
   </entry>
   
   <entry>
+    <title>springboot由浅入深（一）helloWord</title>
+    <link href="ttp://liubenlong.github.io/2016/11/22/spring/spring%20boot/springboot%E7%94%B1%E6%B5%85%E5%85%A5%E6%B7%B1%EF%BC%88%E4%B8%80%EF%BC%89HelloWord/"/>
+    <id>ttp://liubenlong.github.io/2016/11/22/spring/spring boot/springboot由浅入深（一）HelloWord/</id>
+    <published>2016-11-22T13:31:42.000Z</published>
+    <updated>2016-11-22T10:23:57.475Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+      <category term="springboot" scheme="ttp://liubenlong.github.io/categories/springboot/"/>
+    
+    
+      <category term="springboot" scheme="ttp://liubenlong.github.io/tags/springboot/"/>
+    
+      <category term="spring" scheme="ttp://liubenlong.github.io/tags/spring/"/>
+    
+  </entry>
+  
+  <entry>
     <title>hexo+github博客环境搭建</title>
     <link href="ttp://liubenlong.github.io/2016/11/22/hexo+github%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
     <id>ttp://liubenlong.github.io/2016/11/22/hexo+github环境搭建/</id>
     <published>2016-11-22T13:31:42.000Z</published>
-    <updated>2016-12-14T06:34:08.595Z</updated>
+    <updated>2016-12-14T07:09:21.412Z</updated>
     
     <content type="html"><![CDATA[<h1 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h1><pre><code>hexo new &quot;postName&quot; #新建文章
 hexo new page &quot;pageName&quot; #新建页面
@@ -672,7 +692,18 @@ hexo n == hexo new
 hexo g == hexo generate
 hexo s == hexo server
 hexo d == hexo deploy
-</code></pre><h1 id="引用本地图片问题"><a href="#引用本地图片问题" class="headerlink" title="引用本地图片问题"></a>引用本地图片问题</h1><p>由于本人不会nodejs，所以写了一个java版本的图片迁移工具，直接在hexo博客目录下运行 <code>java -jar hexo_lbl-1.0-SNAPSHOT.jar</code> 即可<br>改jar包以及源代码已经提交到github上 <a href="https://github.com/liubenlong/hexo-blog" target="_blank" rel="external">https://github.com/liubenlong/hexo-blog</a></p>
+</code></pre><h1 id="添加百度站点注意事项"><a href="#添加百度站点注意事项" class="headerlink" title="添加百度站点注意事项"></a>添加百度站点注意事项</h1><ol>
+<li>安装插件<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm install hexo-generator-sitemap --save</div><div class="line">npm install hexo-generator-baidu-sitemap --save</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>然后重启服务，访问<code>http://localhost:4000/baidusitemap.xml</code>即可看到生产的站点地图</p>
+<blockquote>
+<p>我这里没有生成<code>sitemap.xml</code>只生成了<code>baidusitemap.xml</code>。不过没有影响</p>
+</blockquote>
+<ol>
+<li>进入<code>http://zhanzhang.baidu.com/</code>添加站点以及配置网页抓取<br><img src="http://liubenlong.github.io/images/QQ截图20161214145442.png" alt=""><br>这里推荐自动推送和sitemap结合使用。<code>next</code>主题可以配置一下自动推送<code>baidu_push: true</code></li>
+</ol>
+<p>检查百度站点是否成功<br><img src="http://liubenlong.github.io/images/QQ截图20161214150332.png" alt=""></p>
 <blockquote>
 <p>注意 往github上发布之前，要先安装插件  <code>npm install hexo-deployer-git --save</code></p>
 </blockquote>
@@ -696,26 +727,6 @@ hexo new page &amp;quo
       <category term="hexo" scheme="ttp://liubenlong.github.io/tags/hexo/"/>
     
       <category term="环境搭建" scheme="ttp://liubenlong.github.io/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>springboot由浅入深（一）helloWord</title>
-    <link href="ttp://liubenlong.github.io/2016/11/22/spring/spring%20boot/springboot%E7%94%B1%E6%B5%85%E5%85%A5%E6%B7%B1%EF%BC%88%E4%B8%80%EF%BC%89HelloWord/"/>
-    <id>ttp://liubenlong.github.io/2016/11/22/spring/spring boot/springboot由浅入深（一）HelloWord/</id>
-    <published>2016-11-22T13:31:42.000Z</published>
-    <updated>2016-11-22T10:23:57.475Z</updated>
-    
-    <summary type="html">
-    
-    </summary>
-    
-      <category term="springboot" scheme="ttp://liubenlong.github.io/categories/springboot/"/>
-    
-    
-      <category term="springboot" scheme="ttp://liubenlong.github.io/tags/springboot/"/>
-    
-      <category term="spring" scheme="ttp://liubenlong.github.io/tags/spring/"/>
     
   </entry>
   
