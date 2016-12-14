@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="ttp://liubenlong.github.io/"/>
-  <updated>2016-12-14T06:00:06.312Z</updated>
+  <updated>2016-12-13T11:49:46.263Z</updated>
   <id>ttp://liubenlong.github.io/</id>
   
   <author>
@@ -14,33 +14,6 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>Hello World</title>
-    <link href="ttp://liubenlong.github.io/2016/12/14/hello-world/"/>
-    <id>ttp://liubenlong.github.io/2016/12/14/hello-world/</id>
-    <published>2016-12-14T06:00:06.312Z</published>
-    <updated>2016-12-14T06:00:06.312Z</updated>
-    
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.
-    
-    </summary>
-    
-    
-  </entry>
   
   <entry>
     <title>disruptor学习教程（一）helloWord</title>
@@ -116,9 +89,9 @@
       <category term="高并发" scheme="ttp://liubenlong.github.io/categories/%E9%AB%98%E5%B9%B6%E5%8F%91/"/>
     
     
-      <category term="高并发" scheme="ttp://liubenlong.github.io/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/"/>
-    
       <category term="disruptor" scheme="ttp://liubenlong.github.io/tags/disruptor/"/>
+    
+      <category term="高并发" scheme="ttp://liubenlong.github.io/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/"/>
     
   </entry>
   
@@ -153,9 +126,31 @@
     
       <category term="java" scheme="ttp://liubenlong.github.io/tags/java/"/>
     
+      <category term="高并发" scheme="ttp://liubenlong.github.io/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/"/>
+    
       <category term="akka" scheme="ttp://liubenlong.github.io/tags/akka/"/>
     
+  </entry>
+  
+  <entry>
+    <title>akka（三）原理分析（原创）</title>
+    <link href="ttp://liubenlong.github.io/2016/12/08/java%E9%AB%98%E5%B9%B6%E5%8F%91/akka/akka%EF%BC%88%E4%B8%89%EF%BC%89%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90/"/>
+    <id>ttp://liubenlong.github.io/2016/12/08/java高并发/akka/akka（三）原理分析/</id>
+    <published>2016-12-07T16:00:00.000Z</published>
+    <updated>2016-12-08T03:25:22.284Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+      <category term="akka" scheme="ttp://liubenlong.github.io/categories/akka/"/>
+    
+    
+      <category term="java" scheme="ttp://liubenlong.github.io/tags/java/"/>
+    
       <category term="高并发" scheme="ttp://liubenlong.github.io/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/"/>
+    
+      <category term="akka" scheme="ttp://liubenlong.github.io/tags/akka/"/>
     
   </entry>
   
@@ -220,31 +215,9 @@
     
       <category term="java" scheme="ttp://liubenlong.github.io/tags/java/"/>
     
-      <category term="akka" scheme="ttp://liubenlong.github.io/tags/akka/"/>
-    
       <category term="高并发" scheme="ttp://liubenlong.github.io/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/"/>
     
-  </entry>
-  
-  <entry>
-    <title>akka（三）原理分析（原创）</title>
-    <link href="ttp://liubenlong.github.io/2016/12/08/java%E9%AB%98%E5%B9%B6%E5%8F%91/akka/akka%EF%BC%88%E4%B8%89%EF%BC%89%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90/"/>
-    <id>ttp://liubenlong.github.io/2016/12/08/java高并发/akka/akka（三）原理分析/</id>
-    <published>2016-12-07T16:00:00.000Z</published>
-    <updated>2016-12-08T03:25:22.284Z</updated>
-    
-    <summary type="html">
-    
-    </summary>
-    
-      <category term="akka" scheme="ttp://liubenlong.github.io/categories/akka/"/>
-    
-    
-      <category term="java" scheme="ttp://liubenlong.github.io/tags/java/"/>
-    
       <category term="akka" scheme="ttp://liubenlong.github.io/tags/akka/"/>
-    
-      <category term="高并发" scheme="ttp://liubenlong.github.io/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/"/>
     
   </entry>
   
@@ -683,7 +656,7 @@
     <link href="ttp://liubenlong.github.io/2016/11/22/hexo+github%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
     <id>ttp://liubenlong.github.io/2016/11/22/hexo+github环境搭建/</id>
     <published>2016-11-22T13:31:42.000Z</published>
-    <updated>2016-12-14T03:32:43.654Z</updated>
+    <updated>2016-12-14T06:34:08.595Z</updated>
     
     <content type="html"><![CDATA[<h1 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h1><pre><code>hexo new &quot;postName&quot; #新建文章
 hexo new page &quot;pageName&quot; #新建页面
@@ -700,9 +673,13 @@ hexo g == hexo generate
 hexo s == hexo server
 hexo d == hexo deploy
 </code></pre><h1 id="引用本地图片问题"><a href="#引用本地图片问题" class="headerlink" title="引用本地图片问题"></a>引用本地图片问题</h1><p>由于本人不会nodejs，所以写了一个java版本的图片迁移工具，直接在hexo博客目录下运行 <code>java -jar hexo_lbl-1.0-SNAPSHOT.jar</code> 即可<br>改jar包以及源代码已经提交到github上 <a href="https://github.com/liubenlong/hexo-blog" target="_blank" rel="external">https://github.com/liubenlong/hexo-blog</a></p>
+<blockquote>
+<p>注意 往github上发布之前，要先安装插件  <code>npm install hexo-deployer-git --save</code></p>
+</blockquote>
 <h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
 <li><a href="http://www.cnblogs.com/zhcncn/p/4097881.html" target="_blank" rel="external">Hexo搭建Github静态博客</a></li>
 <li><a href="http://theme-next.iissnan.com/" target="_blank" rel="external">next主题官网</a></li>
+<li><a href="http://www.jianshu.com/p/5e0ca2b14815" target="_blank" rel="external">升级hexo碰到“Deployer not found”问题及解决</a></li>
 </ul>
 ]]></content>
     

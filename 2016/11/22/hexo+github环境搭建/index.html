@@ -102,7 +102,7 @@ hexo new page &amp;quot;pageName&amp;quot; #新建页面
 hexo generate #生成静态页面至public目录
 hexo server #开启预览访问端口（默认端口4000，&amp;apos;ctrl + c&amp;apos;关闭server）
 hexo deploy #将.deploy目录部署到G">
-<meta property="og:updated_time" content="2016-12-14T03:32:43.654Z">
+<meta property="og:updated_time" content="2016-12-14T06:34:08.595Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hexo+github博客环境搭建">
 <meta name="twitter:description" content="常用命令hexo new &amp;quot;postName&amp;quot; #新建文章
@@ -453,9 +453,13 @@ hexo g == hexo generate
 hexo s == hexo server
 hexo d == hexo deploy
 </code></pre><h1 id="引用本地图片问题"><a href="#引用本地图片问题" class="headerlink" title="引用本地图片问题"></a>引用本地图片问题</h1><p>由于本人不会nodejs，所以写了一个java版本的图片迁移工具，直接在hexo博客目录下运行 <code>java -jar hexo_lbl-1.0-SNAPSHOT.jar</code> 即可<br>改jar包以及源代码已经提交到github上 <a href="https://github.com/liubenlong/hexo-blog" target="_blank" rel="external">https://github.com/liubenlong/hexo-blog</a></p>
+<blockquote>
+<p>注意 往github上发布之前，要先安装插件  <code>npm install hexo-deployer-git --save</code></p>
+</blockquote>
 <h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
 <li><a href="http://www.cnblogs.com/zhcncn/p/4097881.html" target="_blank" rel="external">Hexo搭建Github静态博客</a></li>
 <li><a href="http://theme-next.iissnan.com/" target="_blank" rel="external">next主题官网</a></li>
+<li><a href="http://www.jianshu.com/p/5e0ca2b14815" target="_blank" rel="external">升级hexo碰到“Deployer not found”问题及解决</a></li>
 </ul>
 
       
@@ -622,7 +626,7 @@ hexo d == hexo deploy
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-count">12</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
