@@ -130,7 +130,7 @@
 
 
 
-  <title> 快乐崇拜的技术博客 </title>
+  <title> Hexo, NexT - 快乐崇拜的技术博客聪明出于勤奋，天才在于积累 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -526,7 +526,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="ttp://liubenlong.github.io/2016/12/08/java高并发/akka/akka学习教程(一)helloword/">
+  <link itemprop="mainEntityOfPage" href="ttp://liubenlong.github.io/2016/12/08/java高并发/akka/akka学习教程(三)原理分析/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="liubenlong">
@@ -551,8 +551,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/12/08/java高并发/akka/akka学习教程(一)helloword/" itemprop="url">
-                  akka学习教程(二)helloword（原创）
+                <a class="post-title-link" href="/2016/12/08/java高并发/akka/akka学习教程(三)原理分析/" itemprop="url">
+                  akka学习教程(三)原理分析（原创）
                 </a>
               
             
@@ -600,8 +600,8 @@
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2016/12/08/java高并发/akka/akka学习教程(一)helloword/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/08/java高并发/akka/akka学习教程(一)helloword/" itemprop="commentCount"></span>
+                <a href="/2016/12/08/java高并发/akka/akka学习教程(三)原理分析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/08/java高并发/akka/akka学习教程(三)原理分析/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -629,18 +629,7 @@
       
         
           
-            <p>本示例来自于官方示例（<a href="http://doc.akka.io/docs/akka/2.4.4/intro/getting-started.html）：" target="_blank" rel="external">http://doc.akka.io/docs/akka/2.4.4/intro/getting-started.html）：</a><br>文中找到 Using Akka with Maven 。点击“Akka Main in Java”下载示例。</p>
-<p><a href="http://www.lightbend.com/activator/template/akka-sample-main-java" target="_blank" rel="external">http://www.lightbend.com/activator/template/akka-sample-main-java</a></p>
-<p><img src="http://liubenlong.github.io/images/77d1dac8-bbf6-4cf2-95e5-7354849dd74c.png" alt=""></p>
-<blockquote>
-<p>注意：新版本的akka需要使用jdk8</p>
-</blockquote>
-<p>里面有两个Actor：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> sample.hello;</div><div class="line"></div><div class="line"><span class="keyword">import</span> akka.actor.Props;</div><div class="line"><span class="keyword">import</span> akka.actor.UntypedActor;</div><div class="line"><span class="keyword">import</span> akka.actor.ActorRef;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorld</span> <span class="keyword">extends</span> <span class="title">UntypedActor</span> </span>&#123;</div><div class="line"></div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">preStart</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="comment">// create the greeter actor</span></div><div class="line">    <span class="keyword">final</span> ActorRef greeter = getContext().actorOf(Props.create(Greeter.class), <span class="string">"greeter"</span>);</div><div class="line">    <span class="comment">// tell it to perform the greeting</span></div><div class="line">    greeter.tell(Greeter.Msg.GREET, getSelf());</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onReceive</span><span class="params">(Object msg)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (msg == Greeter.Msg.DONE) &#123;</div><div class="line">      <span class="comment">// when the greeter is done, stop this actor and with it the application</span></div><div class="line">      getContext().stop(getSelf());</div><div class="line">    &#125; <span class="keyword">else</span></div><div class="line">      unhandled(msg);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> sample.hello;</div><div class="line"></div><div class="line"><span class="keyword">import</span> akka.actor.UntypedActor;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Greeter</span> <span class="keyword">extends</span> <span class="title">UntypedActor</span> </span>&#123;</div><div class="line"></div><div class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">enum</span> Msg &#123;</div><div class="line">    GREET, DONE;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onReceive</span><span class="params">(Object msg)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</div><div class="line">    <span class="keyword">if</span> (msg == Msg.GREET) &#123;</div><div class="line">      System.out.println(<span class="string">"Hello World!"</span>);</div><div class="line">      Thread.sleep(<span class="number">1000</span>);</div><div class="line">      getSender().tell(Msg.DONE, getSelf());</div><div class="line">    &#125; <span class="keyword">else</span></div><div class="line">      unhandled(msg);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>main方法<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> sample.hello;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">    akka.Main.main(<span class="keyword">new</span> String[] &#123; HelloWorld.class.getName() &#125;);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>另一种main写法，通过创建actor的方式<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">    ActorSystem system = ActorSystem.create(<span class="string">"Hello"</span>);</div><div class="line">    ActorRef a = system.actorOf(Props.create(HelloWorld.class), <span class="string">"helloWorld"</span>);</div><div class="line">    System.out.println(a.path());</div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
-<p>helloWord示例比较简单，不过多解释</p>
-
+            
           
         
       
@@ -859,7 +848,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="ttp://liubenlong.github.io/2016/12/08/java高并发/akka/akka学习教程(三)原理分析/">
+  <link itemprop="mainEntityOfPage" href="ttp://liubenlong.github.io/2016/12/08/java高并发/akka/akka学习教程(一)helloword/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="liubenlong">
@@ -884,8 +873,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/12/08/java高并发/akka/akka学习教程(三)原理分析/" itemprop="url">
-                  akka学习教程(三)原理分析（原创）
+                <a class="post-title-link" href="/2016/12/08/java高并发/akka/akka学习教程(一)helloword/" itemprop="url">
+                  akka学习教程(二)helloword（原创）
                 </a>
               
             
@@ -933,8 +922,8 @@
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2016/12/08/java高并发/akka/akka学习教程(三)原理分析/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/08/java高并发/akka/akka学习教程(三)原理分析/" itemprop="commentCount"></span>
+                <a href="/2016/12/08/java高并发/akka/akka学习教程(一)helloword/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/08/java高并发/akka/akka学习教程(一)helloword/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -962,199 +951,17 @@
       
         
           
-            
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="ttp://liubenlong.github.io/2016/12/05/redis/Redis学习教程（一）redis3.2.5集群搭建/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="liubenlong">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/touxiang.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="快乐崇拜的技术博客">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="快乐崇拜的技术博客" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/12/05/redis/Redis学习教程（一）redis3.2.5集群搭建/" itemprop="url">
-                  Redis学习（一）redis3.2.5集群搭建.md
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-05T00:00:00+08:00">
-                2016-12-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/redis/" itemprop="url" rel="index">
-                    <span itemprop="name">redis</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <a href="/2016/12/05/redis/Redis学习教程（一）redis3.2.5集群搭建/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/05/redis/Redis学习教程（一）redis3.2.5集群搭建/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="下载和解包"><a href="#下载和解包" class="headerlink" title="下载和解包"></a>下载和解包</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cd /usr/software</div><div class="line">wget http://download.redis.io/releases/redis-3.2.6.tar.gz</div><div class="line">tar -zxvf /redis-3.2.6.tar.gz</div></pre></td></tr></table></figure>
-<h2 id="编译安装"><a href="#编译安装" class="headerlink" title="编译安装"></a>编译安装</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd redis-3.2.6</div><div class="line">make &amp;&amp; make install</div></pre></td></tr></table></figure>
-<h2 id="创建redis节点"><a href="#创建redis节点" class="headerlink" title="创建redis节点"></a>创建redis节点</h2><blockquote>
-<p>测试我们选择2台服务器，分别为：192.168.215.129，192.168.215.130.每分服务器有3个节点。</p>
-</blockquote>
-<ul>
-<li>我先在192.168.215.129创建3个节点：</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">cd /usr/software</div><div class="line">mkdir redis_cluster //创建集群目录</div><div class="line">cd redis_cluster</div><div class="line">mkdir 7000 7001 7002  //分别代表三个节点    其对应端口 7000 7001 7002</div><div class="line">cd ..</div><div class="line"> //创建7000节点为例，拷贝到7000目录</div><div class="line"> cp /usr/software/redis-3.2.6/redis.conf  ./redis_cluster/7000/</div><div class="line"> //拷贝到7001目录</div><div class="line"> cp /usr/software/redis-3.2.6/redis.conf  ./redis_cluster/7001/</div><div class="line"> //拷贝到7002目录</div><div class="line"> cp /usr/software/redis-3.2.6/redis.conf  ./redis_cluster/7002/</div></pre></td></tr></table></figure>
-<p>   分别对7000，7001、7002文件夹中的3个文件修改对应的配置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">daemonize    yes                          //redis后台运行</div><div class="line">pidfile  /var/run/redis_7000.pid          //pidfile文件对应7000,7001,7002</div><div class="line">port  7000                                //端口7000,7002,7003</div><div class="line">cluster-enabled  yes                      //开启集群  把注释#去掉</div><div class="line">cluster-config-file  nodes_7000.conf      //集群的配置  配置文件首次启动自动生成 7000,7001,7002</div><div class="line">bind 192.168.215.130                      //这里要绑定机器的IP</div><div class="line">cluster-node-timeout  5000                //请求超时  设置5秒够了</div><div class="line">appendonly  yes                           //aof日志开启  有需要就开启，它会每次写操作都记录一条日志&lt;/pre&gt;</div></pre></td></tr></table></figure>
-<ul>
-<li><p>在192.168.1.238创建3个节点：对应的端口改为7003,7004,7005.配置对应的改一下就可以了。</p>
-<p> 4、两台机启动各节点(两台服务器方式一样)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">cd /usr/software</div><div class="line">redis-server  redis_cluster/7000/redis.conf</div><div class="line">redis-server  redis_cluster/7001/redis.conf</div><div class="line">redis-server  redis_cluster/7002/redis.conf</div><div class="line">redis-server  redis_cluster/7003/redis.conf</div><div class="line">redis-server  redis_cluster/7004/redis.conf</div><div class="line">redis-server  redis_cluster/7005/redis.conf</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="查看服务"><a href="#查看服务" class="headerlink" title="查看服务"></a>查看服务</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ps -ef | grep redis   #查看是否启动成功</div><div class="line">netstat -tnlp | grep redis #可以看到redis监听端口</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">[root@zk1 software]# ps -ef | grep redis</div><div class="line">root      10601      1  0 06:42 ?        00:00:00 redis-server 192.168.215.129:7000 [cluster]</div><div class="line">root      10606      1  0 06:42 ?        00:00:00 redis-server 192.168.215.129:7001 [cluster]</div><div class="line">root      10610      1  0 06:42 ?        00:00:00 redis-server 192.168.215.129:7002 [cluster]</div><div class="line">root      10615   4548  0 06:42 pts/2    00:00:00 grep --color=auto redis</div><div class="line">[root@zk1 software]# </div><div class="line">[root@zk1 software]# </div><div class="line">[root@zk1 software]# </div><div class="line">[root@zk1 software]# netstat -tnlp | grep redis</div><div class="line">tcp        0      0 192.168.215.129:17002   0.0.0.0:*               LISTEN      10610/redis-server  </div><div class="line">tcp        0      0 192.168.215.129:7000    0.0.0.0:*               LISTEN      10601/redis-server  </div><div class="line">tcp        0      0 192.168.215.129:7001    0.0.0.0:*               LISTEN      10606/redis-server  </div><div class="line">tcp        0      0 192.168.215.129:7002    0.0.0.0:*               LISTEN      10610/redis-server  </div><div class="line">tcp        0      0 192.168.215.129:17000   0.0.0.0:*               LISTEN      10601/redis-server  </div><div class="line">tcp        0      0 192.168.215.129:17001   0.0.0.0:*               LISTEN      10606/redis-server</div></pre></td></tr></table></figure>
-<h2 id="创建集群"><a href="#创建集群" class="headerlink" title="创建集群"></a>创建集群</h2><p>前面已经准备好了搭建集群的redis节点，接下来我们要把这些节点都串连起来搭建集群。官方提供了一个工具：redis-trib.rb(/usr/local/redis-3.2.1/src/redis-trib.rb) 看后缀就知道这鸟东西不能直接执行，它是用ruby写的一个程序，所以我们还得安装ruby.再用 gem 这个命令来安装 redis接口, gem是ruby的一个工具包.<br>为了方便，两台机器都安装.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">yum -y install ruby ruby-devel rubygems rpm-build</div><div class="line">gem install redis</div></pre></td></tr></table></figure></p>
+            <p>本示例来自于官方示例（<a href="http://doc.akka.io/docs/akka/2.4.4/intro/getting-started.html）：" target="_blank" rel="external">http://doc.akka.io/docs/akka/2.4.4/intro/getting-started.html）：</a><br>文中找到 Using Akka with Maven 。点击“Akka Main in Java”下载示例。</p>
+<p><a href="http://www.lightbend.com/activator/template/akka-sample-main-java" target="_blank" rel="external">http://www.lightbend.com/activator/template/akka-sample-main-java</a></p>
+<p><img src="http://liubenlong.github.io/images/77d1dac8-bbf6-4cf2-95e5-7354849dd74c.png" alt=""></p>
 <blockquote>
-<p>注意：这里需要修改gem源，并且淘宝的gem源已经不能用了，坑爹啊，现在要使用ruby-china。<br><a href="https://gems.ruby-china.org/" target="_blank" rel="external">https://gems.ruby-china.org/</a></p>
+<p>注意：新版本的akka需要使用jdk8</p>
 </blockquote>
-<p>添加ruby-china源：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[root@zk1 software]# gem sources --add https://gems.ruby-china.org/ --remove https://rubygems.org/</div><div class="line">[root@zk1 software]# gem sources -l</div><div class="line">*** CURRENT SOURCES ***</div><div class="line"></div><div class="line">https://gems.ruby-china.org/</div></pre></td></tr></table></figure></p>
-<ul>
-<li>redis-trib.rb<br>进入<code>/usr/software/redis-3.2.5/src</code>运行一下<code>redis-trib.rb</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">[root@zk2 src]# ./redis-trib.rb</div><div class="line">Usage: redis-trib &lt;command&gt; &lt;options&gt; &lt;arguments ...&gt;</div><div class="line"></div><div class="line">  create          host1:port1 ... hostN:portN</div><div class="line">                  --replicas &lt;arg&gt;</div><div class="line">  check           host:port</div><div class="line">  info            host:port</div><div class="line">  fix             host:port</div><div class="line">                  --timeout &lt;arg&gt;</div><div class="line">  reshard         host:port</div><div class="line">                  --from &lt;arg&gt;</div><div class="line">                  --to &lt;arg&gt;</div><div class="line">                  --slots &lt;arg&gt;</div><div class="line">                  --yes</div><div class="line">                  --timeout &lt;arg&gt;</div><div class="line">                  --pipeline &lt;arg&gt;</div><div class="line">  rebalance       host:port</div><div class="line">                  --weight &lt;arg&gt;</div><div class="line">                  --auto-weights</div><div class="line">                  --use-empty-masters</div><div class="line">                  --timeout &lt;arg&gt;</div><div class="line">                  --simulate</div><div class="line">                  --pipeline &lt;arg&gt;</div><div class="line">                  --threshold &lt;arg&gt;</div><div class="line">  add-node        new_host:new_port existing_host:existing_port</div><div class="line">                  --slave</div><div class="line">                  --master-id &lt;arg&gt;</div><div class="line">  del-node        host:port node_id</div><div class="line">  set-timeout     host:port milliseconds</div><div class="line">  call            host:port command arg arg .. arg</div><div class="line">  import          host:port</div><div class="line">                  --from &lt;arg&gt;</div><div class="line">                  --copy</div><div class="line">                  --replace</div><div class="line">  help            (show this help)</div><div class="line"></div><div class="line">For check, fix, reshard, del-node, set-timeout you can specify the host and port of any working node in the cluster.</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>看到这，应该明白了吧， 就是靠上面这些操作 完成redis集群搭建的.</p>
-<p> 确认所有的节点都启动，接下来使用参数create 创建 (在192.168.215.129中来创建)<em>注意要关闭防火墙</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line">[root@zk1 src]# ./redis-trib.rb  create  --replicas  1  192.168.215.129:7000 192.168.215.129:7001  192.168.215.129:7002 192.168.215.130:7003  192.168.215.130:7004  192.168.215.130:7005</div><div class="line">&gt;&gt;&gt; Creating cluster</div><div class="line">&gt;&gt;&gt; Performing hash slots allocation on 6 nodes...</div><div class="line">Using 3 masters:</div><div class="line">192.168.215.129:7000</div><div class="line">192.168.215.130:7003</div><div class="line">192.168.215.129:7001</div><div class="line">Adding replica 192.168.215.130:7004 to 192.168.215.129:7000</div><div class="line">Adding replica 192.168.215.129:7002 to 192.168.215.130:7003</div><div class="line">Adding replica 192.168.215.130:7005 to 192.168.215.129:7001</div><div class="line">M: 16518afbfcbd961aeb76ef1592007a3e7fe24b1b 192.168.215.129:7000</div><div class="line">   slots:0-5460 (5461 slots) master</div><div class="line">M: 524219969118a57ceaac753ecef7585f634cdf26 192.168.215.129:7001</div><div class="line">   slots:10923-16383 (5461 slots) master</div><div class="line">S: ea4519ff0083a13cef8262490ee9e61e5a4b14b1 192.168.215.129:7002</div><div class="line">   replicates 82c0e591b9bc7a289026dff2873a254d1c49d285</div><div class="line">M: 82c0e591b9bc7a289026dff2873a254d1c49d285 192.168.215.130:7003</div><div class="line">   slots:5461-10922 (5462 slots) master</div><div class="line">S: baf74dd89c0605d2a71a8d1d3706005ff668563b 192.168.215.130:7004</div><div class="line">   replicates 16518afbfcbd961aeb76ef1592007a3e7fe24b1b</div><div class="line">S: f8192314d2232e12ba9f558e9ecbfcc890f4fb73 192.168.215.130:7005</div><div class="line">   replicates 524219969118a57ceaac753ecef7585f634cdf26</div><div class="line">Can I set the above configuration? (type &apos;yes&apos; to accept): yes</div><div class="line">&gt;&gt;&gt; Nodes configuration updated</div><div class="line">&gt;&gt;&gt; Assign a different config epoch to each node</div><div class="line">&gt;&gt;&gt; Sending CLUSTER MEET messages to join the cluster</div><div class="line">Waiting for the cluster to join.....</div><div class="line">&gt;&gt;&gt; Performing Cluster Check (using node 192.168.215.129:7000)</div><div class="line">M: 16518afbfcbd961aeb76ef1592007a3e7fe24b1b 192.168.215.129:7000</div><div class="line">   slots:0-5460 (5461 slots) master</div><div class="line">   1 additional replica(s)</div><div class="line">S: ea4519ff0083a13cef8262490ee9e61e5a4b14b1 192.168.215.129:7002</div><div class="line">   slots: (0 slots) slave</div><div class="line">   replicates 82c0e591b9bc7a289026dff2873a254d1c49d285</div><div class="line">S: f8192314d2232e12ba9f558e9ecbfcc890f4fb73 192.168.215.130:7005</div><div class="line">   slots: (0 slots) slave</div><div class="line">   replicates 524219969118a57ceaac753ecef7585f634cdf26</div><div class="line">S: baf74dd89c0605d2a71a8d1d3706005ff668563b 192.168.215.130:7004</div><div class="line">   slots: (0 slots) slave</div><div class="line">   replicates 16518afbfcbd961aeb76ef1592007a3e7fe24b1b</div><div class="line">M: 524219969118a57ceaac753ecef7585f634cdf26 192.168.215.129:7001</div><div class="line">   slots:10923-16383 (5461 slots) master</div><div class="line">   1 additional replica(s)</div><div class="line">M: 82c0e591b9bc7a289026dff2873a254d1c49d285 192.168.215.130:7003</div><div class="line">   slots:5461-10922 (5462 slots) master</div><div class="line">   1 additional replica(s)</div><div class="line">[OK] All nodes agree about slots configuration.</div><div class="line">&gt;&gt;&gt; Check for open slots...</div><div class="line">&gt;&gt;&gt; Check slots coverage...</div><div class="line">[OK] All 16384 slots covered.</div></pre></td></tr></table></figure></p>
-<blockquote>
-<p>解释下， –replicas  1  表示 自动为每一个master节点分配一个slave节点    上面有6个节点，程序会按照一定规则生成 3个master（主）3个slave(从)<br>前面已经提醒过的 防火墙一定要开放监听的端口，否则会创建失败。</p>
-</blockquote>
-<p>检查集群状态:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">[root@zk1 src]# ./redis-trib.rb check 192.168.215.129:7002</div><div class="line">&gt;&gt;&gt; Performing Cluster Check (using node 192.168.215.129:7002)</div><div class="line">S: ea4519ff0083a13cef8262490ee9e61e5a4b14b1 192.168.215.129:7002</div><div class="line">   slots: (0 slots) slave</div><div class="line">   replicates 82c0e591b9bc7a289026dff2873a254d1c49d285</div><div class="line">M: 82c0e591b9bc7a289026dff2873a254d1c49d285 192.168.215.130:7003</div><div class="line">   slots:5461-10922 (5462 slots) master</div><div class="line">   1 additional replica(s)</div><div class="line">S: baf74dd89c0605d2a71a8d1d3706005ff668563b 192.168.215.130:7004</div><div class="line">   slots: (0 slots) slave</div><div class="line">   replicates 16518afbfcbd961aeb76ef1592007a3e7fe24b1b</div><div class="line">M: 524219969118a57ceaac753ecef7585f634cdf26 192.168.215.129:7001</div><div class="line">   slots:10923-16383 (5461 slots) master</div><div class="line">   1 additional replica(s)</div><div class="line">M: 16518afbfcbd961aeb76ef1592007a3e7fe24b1b 192.168.215.129:7000</div><div class="line">   slots:0-5460 (5461 slots) master</div><div class="line">   1 additional replica(s)</div><div class="line">S: f8192314d2232e12ba9f558e9ecbfcc890f4fb73 192.168.215.130:7005</div><div class="line">   slots: (0 slots) slave</div><div class="line">   replicates 524219969118a57ceaac753ecef7585f634cdf26</div><div class="line">[OK] All nodes agree about slots configuration.</div><div class="line">&gt;&gt;&gt; Check for open slots...</div><div class="line">&gt;&gt;&gt; Check slots coverage...</div><div class="line">[OK] All 16384 slots covered.</div></pre></td></tr></table></figure></p>
-<blockquote>
-<p>redis集群中数据分片是通过hash slot的方式实现的</p>
-</blockquote>
-<h2 id="测试集群"><a href="#测试集群" class="headerlink" title="测试集群"></a>测试集群</h2><ul>
-<li>链接服务器</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">[root@zk1 src]# ./redis-cli -c -p 7000 -h 192.168.215.129</div><div class="line">192.168.215.129:7000&gt;</div><div class="line">192.168.215.129:7000&gt; cluster info</div><div class="line">cluster_state:ok</div><div class="line">cluster_slots_assigned:16384</div><div class="line">cluster_slots_ok:16384</div><div class="line">cluster_slots_pfail:0</div><div class="line">cluster_slots_fail:0</div><div class="line">cluster_known_nodes:6</div><div class="line">cluster_size:3</div><div class="line">cluster_current_epoch:6</div><div class="line">cluster_my_epoch:1</div><div class="line">cluster_stats_messages_sent:1502</div><div class="line">cluster_stats_messages_received:1502</div></pre></td></tr></table></figure>
-<ul>
-<li>set值<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">192.168.215.129:7000&gt; set name lbl</div><div class="line">-&gt; Redirected to slot [5798] located at 192.168.215.130:7003</div><div class="line">OK</div><div class="line">192.168.215.130:7003&gt; get name</div><div class="line">&quot;lbl&quot;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>可见，重定向到了130节点7003端口。<br>原因是redis采用hash槽的方式分发key到不同节点，算法是crc(16)%16384。详细描述后续会单独写文章描述。<br><strong>而且你会发现，当一次重定向以后，这个客户端就连接到了130:7003这个节点。</strong></p>
-<h2 id="测试其中一个master宕机"><a href="#测试其中一个master宕机" class="headerlink" title="测试其中一个master宕机"></a>测试其中一个master宕机</h2><blockquote>
-<p>将上面设置的<code>name</code>所在的<code>130:7003</code>kill掉，只剩了两个master和3个slave。你会发现<code>cluster_current_epoch</code>相比之前加了1，这是因为redis的主从关系，重新选了一次主。<br>然后<code>get name</code>发现，重定向了<code>129:7002</code>这个节点。</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">[root@zk1 src]# ./redis-trib.rb check 192.168.215.129:7002</div><div class="line">&gt;&gt;&gt; Performing Cluster Check (using node 192.168.215.129:7002)</div><div class="line">M: ea4519ff0083a13cef8262490ee9e61e5a4b14b1 192.168.215.129:7002</div><div class="line">   slots:5461-10922 (5462 slots) master</div><div class="line">   0 additional replica(s)</div><div class="line">S: baf74dd89c0605d2a71a8d1d3706005ff668563b 192.168.215.130:7004</div><div class="line">   slots: (0 slots) slave</div><div class="line">   replicates 16518afbfcbd961aeb76ef1592007a3e7fe24b1b</div><div class="line">M: 524219969118a57ceaac753ecef7585f634cdf26 192.168.215.129:7001</div><div class="line">   slots:10923-16383 (5461 slots) master</div><div class="line">   1 additional replica(s)</div><div class="line">M: 16518afbfcbd961aeb76ef1592007a3e7fe24b1b 192.168.215.129:7000</div><div class="line">   slots:0-5460 (5461 slots) master</div><div class="line">   1 additional replica(s)</div><div class="line">S: f8192314d2232e12ba9f558e9ecbfcc890f4fb73 192.168.215.130:7005</div><div class="line">   slots: (0 slots) slave</div><div class="line">   replicates 524219969118a57ceaac753ecef7585f634cdf26</div><div class="line">[OK] All nodes agree about slots configuration.</div><div class="line">&gt;&gt;&gt; Check for open slots...</div><div class="line">&gt;&gt;&gt; Check slots coverage...</div><div class="line">[OK] All 16384 slots covered.</div><div class="line"></div><div class="line">[root@zk1 src]# ./redis-cli -c -p 7000 -h 192.168.215.129</div><div class="line">192.168.215.129:7000&gt; cluster info</div><div class="line">cluster_state:ok</div><div class="line">cluster_slots_assigned:16384</div><div class="line">cluster_slots_ok:16384</div><div class="line">cluster_slots_pfail:0</div><div class="line">cluster_slots_fail:0</div><div class="line">cluster_known_nodes:6</div><div class="line">cluster_size:3</div><div class="line">cluster_current_epoch:7</div><div class="line">cluster_my_epoch:1</div><div class="line">cluster_stats_messages_sent:2883</div><div class="line">cluster_stats_messages_received:2675</div><div class="line">192.168.215.129:7000&gt; get name</div><div class="line">-&gt; Redirected to slot [5798] located at 192.168.215.129:7002</div><div class="line">&quot;lbl&quot;</div></pre></td></tr></table></figure>
-<p>之所以会重定向到<code>129:7002</code>这个节点，是因为在kill之前<code>129:7002</code>是<code>130:7003</code>的slave：<br><em>下面这是在kill之前拷贝的<code>./redis-trib.rb check</code>的数据，注意<code>replicates</code>后的值</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">1.  `S: ea4519ff0083a13cef8262490ee9e61e5a4b14b1 192.168.215.129:7002`</div><div class="line">2.  `replicates 82c0e591b9bc7a289026dff2873a254d1c49d285`</div><div class="line">3.  `M:  82c0e591b9bc7a289026dff2873a254d1c49d285  192.168.215.130:7003`</div><div class="line">4.  `slots:5461-10922  (5462 slots) master`</div></pre></td></tr></table></figure></p>
-<p>好了，今天就到这里，redis具体实现原理后续再讲。</p>
+<p>里面有两个Actor：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> sample.hello;</div><div class="line"></div><div class="line"><span class="keyword">import</span> akka.actor.Props;</div><div class="line"><span class="keyword">import</span> akka.actor.UntypedActor;</div><div class="line"><span class="keyword">import</span> akka.actor.ActorRef;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorld</span> <span class="keyword">extends</span> <span class="title">UntypedActor</span> </span>&#123;</div><div class="line"></div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">preStart</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="comment">// create the greeter actor</span></div><div class="line">    <span class="keyword">final</span> ActorRef greeter = getContext().actorOf(Props.create(Greeter.class), <span class="string">"greeter"</span>);</div><div class="line">    <span class="comment">// tell it to perform the greeting</span></div><div class="line">    greeter.tell(Greeter.Msg.GREET, getSelf());</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onReceive</span><span class="params">(Object msg)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (msg == Greeter.Msg.DONE) &#123;</div><div class="line">      <span class="comment">// when the greeter is done, stop this actor and with it the application</span></div><div class="line">      getContext().stop(getSelf());</div><div class="line">    &#125; <span class="keyword">else</span></div><div class="line">      unhandled(msg);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> sample.hello;</div><div class="line"></div><div class="line"><span class="keyword">import</span> akka.actor.UntypedActor;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Greeter</span> <span class="keyword">extends</span> <span class="title">UntypedActor</span> </span>&#123;</div><div class="line"></div><div class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">enum</span> Msg &#123;</div><div class="line">    GREET, DONE;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onReceive</span><span class="params">(Object msg)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</div><div class="line">    <span class="keyword">if</span> (msg == Msg.GREET) &#123;</div><div class="line">      System.out.println(<span class="string">"Hello World!"</span>);</div><div class="line">      Thread.sleep(<span class="number">1000</span>);</div><div class="line">      getSender().tell(Msg.DONE, getSelf());</div><div class="line">    &#125; <span class="keyword">else</span></div><div class="line">      unhandled(msg);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>main方法<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> sample.hello;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">    akka.Main.main(<span class="keyword">new</span> String[] &#123; HelloWorld.class.getName() &#125;);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>另一种main写法，通过创建actor的方式<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">    ActorSystem system = ActorSystem.create(<span class="string">"Hello"</span>);</div><div class="line">    ActorRef a = system.actorOf(Props.create(HelloWorld.class), <span class="string">"helloWorld"</span>);</div><div class="line">    System.out.println(a.path());</div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
+<p>helloWord示例比较简单，不过多解释</p>
 
           
         
@@ -1533,7 +1340,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="ttp://liubenlong.github.io/2016/11/29/java高并发/Disruptor/disruptor学习教程(二)为什么快/">
+  <link itemprop="mainEntityOfPage" href="ttp://liubenlong.github.io/2016/12/05/redis/Redis学习教程（一）redis3.2.5集群搭建/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="liubenlong">
@@ -1558,7 +1365,200 @@
             
               
                 
-                <a class="post-title-link" href="/2016/11/29/java高并发/Disruptor/disruptor学习教程(二)为什么快/" itemprop="url">
+                <a class="post-title-link" href="/2016/12/05/redis/Redis学习教程（一）redis3.2.5集群搭建/" itemprop="url">
+                  Redis学习（一）redis3.2.5集群搭建.md
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-05T00:00:00+08:00">
+                2016-12-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/redis/" itemprop="url" rel="index">
+                    <span itemprop="name">redis</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2016/12/05/redis/Redis学习教程（一）redis3.2.5集群搭建/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/05/redis/Redis学习教程（一）redis3.2.5集群搭建/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="下载和解包"><a href="#下载和解包" class="headerlink" title="下载和解包"></a>下载和解包</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cd /usr/software</div><div class="line">wget http://download.redis.io/releases/redis-3.2.6.tar.gz</div><div class="line">tar -zxvf /redis-3.2.6.tar.gz</div></pre></td></tr></table></figure>
+<h2 id="编译安装"><a href="#编译安装" class="headerlink" title="编译安装"></a>编译安装</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd redis-3.2.6</div><div class="line">make &amp;&amp; make install</div></pre></td></tr></table></figure>
+<h2 id="创建redis节点"><a href="#创建redis节点" class="headerlink" title="创建redis节点"></a>创建redis节点</h2><blockquote>
+<p>测试我们选择2台服务器，分别为：192.168.215.129，192.168.215.130.每分服务器有3个节点。</p>
+</blockquote>
+<ul>
+<li>我先在192.168.215.129创建3个节点：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">cd /usr/software</div><div class="line">mkdir redis_cluster //创建集群目录</div><div class="line">cd redis_cluster</div><div class="line">mkdir 7000 7001 7002  //分别代表三个节点    其对应端口 7000 7001 7002</div><div class="line">cd ..</div><div class="line"> //创建7000节点为例，拷贝到7000目录</div><div class="line"> cp /usr/software/redis-3.2.6/redis.conf  ./redis_cluster/7000/</div><div class="line"> //拷贝到7001目录</div><div class="line"> cp /usr/software/redis-3.2.6/redis.conf  ./redis_cluster/7001/</div><div class="line"> //拷贝到7002目录</div><div class="line"> cp /usr/software/redis-3.2.6/redis.conf  ./redis_cluster/7002/</div></pre></td></tr></table></figure>
+<p>   分别对7000，7001、7002文件夹中的3个文件修改对应的配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">daemonize    yes                          //redis后台运行</div><div class="line">pidfile  /var/run/redis_7000.pid          //pidfile文件对应7000,7001,7002</div><div class="line">port  7000                                //端口7000,7002,7003</div><div class="line">cluster-enabled  yes                      //开启集群  把注释#去掉</div><div class="line">cluster-config-file  nodes_7000.conf      //集群的配置  配置文件首次启动自动生成 7000,7001,7002</div><div class="line">bind 192.168.215.130                      //这里要绑定机器的IP</div><div class="line">cluster-node-timeout  5000                //请求超时  设置5秒够了</div><div class="line">appendonly  yes                           //aof日志开启  有需要就开启，它会每次写操作都记录一条日志&lt;/pre&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li><p>在192.168.1.238创建3个节点：对应的端口改为7003,7004,7005.配置对应的改一下就可以了。</p>
+<p> 4、两台机启动各节点(两台服务器方式一样)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">cd /usr/software</div><div class="line">redis-server  redis_cluster/7000/redis.conf</div><div class="line">redis-server  redis_cluster/7001/redis.conf</div><div class="line">redis-server  redis_cluster/7002/redis.conf</div><div class="line">redis-server  redis_cluster/7003/redis.conf</div><div class="line">redis-server  redis_cluster/7004/redis.conf</div><div class="line">redis-server  redis_cluster/7005/redis.conf</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="查看服务"><a href="#查看服务" class="headerlink" title="查看服务"></a>查看服务</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ps -ef | grep redis   #查看是否启动成功</div><div class="line">netstat -tnlp | grep redis #可以看到redis监听端口</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">[root@zk1 software]# ps -ef | grep redis</div><div class="line">root      10601      1  0 06:42 ?        00:00:00 redis-server 192.168.215.129:7000 [cluster]</div><div class="line">root      10606      1  0 06:42 ?        00:00:00 redis-server 192.168.215.129:7001 [cluster]</div><div class="line">root      10610      1  0 06:42 ?        00:00:00 redis-server 192.168.215.129:7002 [cluster]</div><div class="line">root      10615   4548  0 06:42 pts/2    00:00:00 grep --color=auto redis</div><div class="line">[root@zk1 software]# </div><div class="line">[root@zk1 software]# </div><div class="line">[root@zk1 software]# </div><div class="line">[root@zk1 software]# netstat -tnlp | grep redis</div><div class="line">tcp        0      0 192.168.215.129:17002   0.0.0.0:*               LISTEN      10610/redis-server  </div><div class="line">tcp        0      0 192.168.215.129:7000    0.0.0.0:*               LISTEN      10601/redis-server  </div><div class="line">tcp        0      0 192.168.215.129:7001    0.0.0.0:*               LISTEN      10606/redis-server  </div><div class="line">tcp        0      0 192.168.215.129:7002    0.0.0.0:*               LISTEN      10610/redis-server  </div><div class="line">tcp        0      0 192.168.215.129:17000   0.0.0.0:*               LISTEN      10601/redis-server  </div><div class="line">tcp        0      0 192.168.215.129:17001   0.0.0.0:*               LISTEN      10606/redis-server</div></pre></td></tr></table></figure>
+<h2 id="创建集群"><a href="#创建集群" class="headerlink" title="创建集群"></a>创建集群</h2><p>前面已经准备好了搭建集群的redis节点，接下来我们要把这些节点都串连起来搭建集群。官方提供了一个工具：redis-trib.rb(/usr/local/redis-3.2.1/src/redis-trib.rb) 看后缀就知道这鸟东西不能直接执行，它是用ruby写的一个程序，所以我们还得安装ruby.再用 gem 这个命令来安装 redis接口, gem是ruby的一个工具包.<br>为了方便，两台机器都安装.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">yum -y install ruby ruby-devel rubygems rpm-build</div><div class="line">gem install redis</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>注意：这里需要修改gem源，并且淘宝的gem源已经不能用了，坑爹啊，现在要使用ruby-china。<br><a href="https://gems.ruby-china.org/" target="_blank" rel="external">https://gems.ruby-china.org/</a></p>
+</blockquote>
+<p>添加ruby-china源：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[root@zk1 software]# gem sources --add https://gems.ruby-china.org/ --remove https://rubygems.org/</div><div class="line">[root@zk1 software]# gem sources -l</div><div class="line">*** CURRENT SOURCES ***</div><div class="line"></div><div class="line">https://gems.ruby-china.org/</div></pre></td></tr></table></figure></p>
+<ul>
+<li>redis-trib.rb<br>进入<code>/usr/software/redis-3.2.5/src</code>运行一下<code>redis-trib.rb</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">[root@zk2 src]# ./redis-trib.rb</div><div class="line">Usage: redis-trib &lt;command&gt; &lt;options&gt; &lt;arguments ...&gt;</div><div class="line"></div><div class="line">  create          host1:port1 ... hostN:portN</div><div class="line">                  --replicas &lt;arg&gt;</div><div class="line">  check           host:port</div><div class="line">  info            host:port</div><div class="line">  fix             host:port</div><div class="line">                  --timeout &lt;arg&gt;</div><div class="line">  reshard         host:port</div><div class="line">                  --from &lt;arg&gt;</div><div class="line">                  --to &lt;arg&gt;</div><div class="line">                  --slots &lt;arg&gt;</div><div class="line">                  --yes</div><div class="line">                  --timeout &lt;arg&gt;</div><div class="line">                  --pipeline &lt;arg&gt;</div><div class="line">  rebalance       host:port</div><div class="line">                  --weight &lt;arg&gt;</div><div class="line">                  --auto-weights</div><div class="line">                  --use-empty-masters</div><div class="line">                  --timeout &lt;arg&gt;</div><div class="line">                  --simulate</div><div class="line">                  --pipeline &lt;arg&gt;</div><div class="line">                  --threshold &lt;arg&gt;</div><div class="line">  add-node        new_host:new_port existing_host:existing_port</div><div class="line">                  --slave</div><div class="line">                  --master-id &lt;arg&gt;</div><div class="line">  del-node        host:port node_id</div><div class="line">  set-timeout     host:port milliseconds</div><div class="line">  call            host:port command arg arg .. arg</div><div class="line">  import          host:port</div><div class="line">                  --from &lt;arg&gt;</div><div class="line">                  --copy</div><div class="line">                  --replace</div><div class="line">  help            (show this help)</div><div class="line"></div><div class="line">For check, fix, reshard, del-node, set-timeout you can specify the host and port of any working node in the cluster.</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>看到这，应该明白了吧， 就是靠上面这些操作 完成redis集群搭建的.</p>
+<p> 确认所有的节点都启动，接下来使用参数create 创建 (在192.168.215.129中来创建)<em>注意要关闭防火墙</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line">[root@zk1 src]# ./redis-trib.rb  create  --replicas  1  192.168.215.129:7000 192.168.215.129:7001  192.168.215.129:7002 192.168.215.130:7003  192.168.215.130:7004  192.168.215.130:7005</div><div class="line">&gt;&gt;&gt; Creating cluster</div><div class="line">&gt;&gt;&gt; Performing hash slots allocation on 6 nodes...</div><div class="line">Using 3 masters:</div><div class="line">192.168.215.129:7000</div><div class="line">192.168.215.130:7003</div><div class="line">192.168.215.129:7001</div><div class="line">Adding replica 192.168.215.130:7004 to 192.168.215.129:7000</div><div class="line">Adding replica 192.168.215.129:7002 to 192.168.215.130:7003</div><div class="line">Adding replica 192.168.215.130:7005 to 192.168.215.129:7001</div><div class="line">M: 16518afbfcbd961aeb76ef1592007a3e7fe24b1b 192.168.215.129:7000</div><div class="line">   slots:0-5460 (5461 slots) master</div><div class="line">M: 524219969118a57ceaac753ecef7585f634cdf26 192.168.215.129:7001</div><div class="line">   slots:10923-16383 (5461 slots) master</div><div class="line">S: ea4519ff0083a13cef8262490ee9e61e5a4b14b1 192.168.215.129:7002</div><div class="line">   replicates 82c0e591b9bc7a289026dff2873a254d1c49d285</div><div class="line">M: 82c0e591b9bc7a289026dff2873a254d1c49d285 192.168.215.130:7003</div><div class="line">   slots:5461-10922 (5462 slots) master</div><div class="line">S: baf74dd89c0605d2a71a8d1d3706005ff668563b 192.168.215.130:7004</div><div class="line">   replicates 16518afbfcbd961aeb76ef1592007a3e7fe24b1b</div><div class="line">S: f8192314d2232e12ba9f558e9ecbfcc890f4fb73 192.168.215.130:7005</div><div class="line">   replicates 524219969118a57ceaac753ecef7585f634cdf26</div><div class="line">Can I set the above configuration? (type &apos;yes&apos; to accept): yes</div><div class="line">&gt;&gt;&gt; Nodes configuration updated</div><div class="line">&gt;&gt;&gt; Assign a different config epoch to each node</div><div class="line">&gt;&gt;&gt; Sending CLUSTER MEET messages to join the cluster</div><div class="line">Waiting for the cluster to join.....</div><div class="line">&gt;&gt;&gt; Performing Cluster Check (using node 192.168.215.129:7000)</div><div class="line">M: 16518afbfcbd961aeb76ef1592007a3e7fe24b1b 192.168.215.129:7000</div><div class="line">   slots:0-5460 (5461 slots) master</div><div class="line">   1 additional replica(s)</div><div class="line">S: ea4519ff0083a13cef8262490ee9e61e5a4b14b1 192.168.215.129:7002</div><div class="line">   slots: (0 slots) slave</div><div class="line">   replicates 82c0e591b9bc7a289026dff2873a254d1c49d285</div><div class="line">S: f8192314d2232e12ba9f558e9ecbfcc890f4fb73 192.168.215.130:7005</div><div class="line">   slots: (0 slots) slave</div><div class="line">   replicates 524219969118a57ceaac753ecef7585f634cdf26</div><div class="line">S: baf74dd89c0605d2a71a8d1d3706005ff668563b 192.168.215.130:7004</div><div class="line">   slots: (0 slots) slave</div><div class="line">   replicates 16518afbfcbd961aeb76ef1592007a3e7fe24b1b</div><div class="line">M: 524219969118a57ceaac753ecef7585f634cdf26 192.168.215.129:7001</div><div class="line">   slots:10923-16383 (5461 slots) master</div><div class="line">   1 additional replica(s)</div><div class="line">M: 82c0e591b9bc7a289026dff2873a254d1c49d285 192.168.215.130:7003</div><div class="line">   slots:5461-10922 (5462 slots) master</div><div class="line">   1 additional replica(s)</div><div class="line">[OK] All nodes agree about slots configuration.</div><div class="line">&gt;&gt;&gt; Check for open slots...</div><div class="line">&gt;&gt;&gt; Check slots coverage...</div><div class="line">[OK] All 16384 slots covered.</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>解释下， –replicas  1  表示 自动为每一个master节点分配一个slave节点    上面有6个节点，程序会按照一定规则生成 3个master（主）3个slave(从)<br>前面已经提醒过的 防火墙一定要开放监听的端口，否则会创建失败。</p>
+</blockquote>
+<p>检查集群状态:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">[root@zk1 src]# ./redis-trib.rb check 192.168.215.129:7002</div><div class="line">&gt;&gt;&gt; Performing Cluster Check (using node 192.168.215.129:7002)</div><div class="line">S: ea4519ff0083a13cef8262490ee9e61e5a4b14b1 192.168.215.129:7002</div><div class="line">   slots: (0 slots) slave</div><div class="line">   replicates 82c0e591b9bc7a289026dff2873a254d1c49d285</div><div class="line">M: 82c0e591b9bc7a289026dff2873a254d1c49d285 192.168.215.130:7003</div><div class="line">   slots:5461-10922 (5462 slots) master</div><div class="line">   1 additional replica(s)</div><div class="line">S: baf74dd89c0605d2a71a8d1d3706005ff668563b 192.168.215.130:7004</div><div class="line">   slots: (0 slots) slave</div><div class="line">   replicates 16518afbfcbd961aeb76ef1592007a3e7fe24b1b</div><div class="line">M: 524219969118a57ceaac753ecef7585f634cdf26 192.168.215.129:7001</div><div class="line">   slots:10923-16383 (5461 slots) master</div><div class="line">   1 additional replica(s)</div><div class="line">M: 16518afbfcbd961aeb76ef1592007a3e7fe24b1b 192.168.215.129:7000</div><div class="line">   slots:0-5460 (5461 slots) master</div><div class="line">   1 additional replica(s)</div><div class="line">S: f8192314d2232e12ba9f558e9ecbfcc890f4fb73 192.168.215.130:7005</div><div class="line">   slots: (0 slots) slave</div><div class="line">   replicates 524219969118a57ceaac753ecef7585f634cdf26</div><div class="line">[OK] All nodes agree about slots configuration.</div><div class="line">&gt;&gt;&gt; Check for open slots...</div><div class="line">&gt;&gt;&gt; Check slots coverage...</div><div class="line">[OK] All 16384 slots covered.</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>redis集群中数据分片是通过hash slot的方式实现的</p>
+</blockquote>
+<h2 id="测试集群"><a href="#测试集群" class="headerlink" title="测试集群"></a>测试集群</h2><ul>
+<li>链接服务器</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">[root@zk1 src]# ./redis-cli -c -p 7000 -h 192.168.215.129</div><div class="line">192.168.215.129:7000&gt;</div><div class="line">192.168.215.129:7000&gt; cluster info</div><div class="line">cluster_state:ok</div><div class="line">cluster_slots_assigned:16384</div><div class="line">cluster_slots_ok:16384</div><div class="line">cluster_slots_pfail:0</div><div class="line">cluster_slots_fail:0</div><div class="line">cluster_known_nodes:6</div><div class="line">cluster_size:3</div><div class="line">cluster_current_epoch:6</div><div class="line">cluster_my_epoch:1</div><div class="line">cluster_stats_messages_sent:1502</div><div class="line">cluster_stats_messages_received:1502</div></pre></td></tr></table></figure>
+<ul>
+<li>set值<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">192.168.215.129:7000&gt; set name lbl</div><div class="line">-&gt; Redirected to slot [5798] located at 192.168.215.130:7003</div><div class="line">OK</div><div class="line">192.168.215.130:7003&gt; get name</div><div class="line">&quot;lbl&quot;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>可见，重定向到了130节点7003端口。<br>原因是redis采用hash槽的方式分发key到不同节点，算法是crc(16)%16384。详细描述后续会单独写文章描述。<br><strong>而且你会发现，当一次重定向以后，这个客户端就连接到了130:7003这个节点。</strong></p>
+<h2 id="测试其中一个master宕机"><a href="#测试其中一个master宕机" class="headerlink" title="测试其中一个master宕机"></a>测试其中一个master宕机</h2><blockquote>
+<p>将上面设置的<code>name</code>所在的<code>130:7003</code>kill掉，只剩了两个master和3个slave。你会发现<code>cluster_current_epoch</code>相比之前加了1，这是因为redis的主从关系，重新选了一次主。<br>然后<code>get name</code>发现，重定向了<code>129:7002</code>这个节点。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">[root@zk1 src]# ./redis-trib.rb check 192.168.215.129:7002</div><div class="line">&gt;&gt;&gt; Performing Cluster Check (using node 192.168.215.129:7002)</div><div class="line">M: ea4519ff0083a13cef8262490ee9e61e5a4b14b1 192.168.215.129:7002</div><div class="line">   slots:5461-10922 (5462 slots) master</div><div class="line">   0 additional replica(s)</div><div class="line">S: baf74dd89c0605d2a71a8d1d3706005ff668563b 192.168.215.130:7004</div><div class="line">   slots: (0 slots) slave</div><div class="line">   replicates 16518afbfcbd961aeb76ef1592007a3e7fe24b1b</div><div class="line">M: 524219969118a57ceaac753ecef7585f634cdf26 192.168.215.129:7001</div><div class="line">   slots:10923-16383 (5461 slots) master</div><div class="line">   1 additional replica(s)</div><div class="line">M: 16518afbfcbd961aeb76ef1592007a3e7fe24b1b 192.168.215.129:7000</div><div class="line">   slots:0-5460 (5461 slots) master</div><div class="line">   1 additional replica(s)</div><div class="line">S: f8192314d2232e12ba9f558e9ecbfcc890f4fb73 192.168.215.130:7005</div><div class="line">   slots: (0 slots) slave</div><div class="line">   replicates 524219969118a57ceaac753ecef7585f634cdf26</div><div class="line">[OK] All nodes agree about slots configuration.</div><div class="line">&gt;&gt;&gt; Check for open slots...</div><div class="line">&gt;&gt;&gt; Check slots coverage...</div><div class="line">[OK] All 16384 slots covered.</div><div class="line"></div><div class="line">[root@zk1 src]# ./redis-cli -c -p 7000 -h 192.168.215.129</div><div class="line">192.168.215.129:7000&gt; cluster info</div><div class="line">cluster_state:ok</div><div class="line">cluster_slots_assigned:16384</div><div class="line">cluster_slots_ok:16384</div><div class="line">cluster_slots_pfail:0</div><div class="line">cluster_slots_fail:0</div><div class="line">cluster_known_nodes:6</div><div class="line">cluster_size:3</div><div class="line">cluster_current_epoch:7</div><div class="line">cluster_my_epoch:1</div><div class="line">cluster_stats_messages_sent:2883</div><div class="line">cluster_stats_messages_received:2675</div><div class="line">192.168.215.129:7000&gt; get name</div><div class="line">-&gt; Redirected to slot [5798] located at 192.168.215.129:7002</div><div class="line">&quot;lbl&quot;</div></pre></td></tr></table></figure>
+<p>之所以会重定向到<code>129:7002</code>这个节点，是因为在kill之前<code>129:7002</code>是<code>130:7003</code>的slave：<br><em>下面这是在kill之前拷贝的<code>./redis-trib.rb check</code>的数据，注意<code>replicates</code>后的值</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">1.  `S: ea4519ff0083a13cef8262490ee9e61e5a4b14b1 192.168.215.129:7002`</div><div class="line">2.  `replicates 82c0e591b9bc7a289026dff2873a254d1c49d285`</div><div class="line">3.  `M:  82c0e591b9bc7a289026dff2873a254d1c49d285  192.168.215.130:7003`</div><div class="line">4.  `slots:5461-10922  (5462 slots) master`</div></pre></td></tr></table></figure></p>
+<p>好了，今天就到这里，redis具体实现原理后续再讲。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="ttp://liubenlong.github.io/2016/11/29/ELK/ELK 之 nginx日志分析/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="liubenlong">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/touxiang.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="快乐崇拜的技术博客">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="快乐崇拜的技术博客" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/11/29/ELK/ELK 之 nginx日志分析/" itemprop="url">
                   ELK 之 nginx日志分析（原创）
                 </a>
               
@@ -1607,8 +1607,8 @@
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2016/11/29/java高并发/Disruptor/disruptor学习教程(二)为什么快/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/29/java高并发/Disruptor/disruptor学习教程(二)为什么快/" itemprop="commentCount"></span>
+                <a href="/2016/11/29/ELK/ELK 之 nginx日志分析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/29/ELK/ELK 之 nginx日志分析/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1746,7 +1746,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="ttp://liubenlong.github.io/2016/11/29/ELK/ELK 之 nginx日志分析/">
+  <link itemprop="mainEntityOfPage" href="ttp://liubenlong.github.io/2016/11/29/java高并发/Disruptor/disruptor学习教程(二)为什么快/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="liubenlong">
@@ -1771,7 +1771,7 @@
             
               
                 
-                <a class="post-title-link" href="/2016/11/29/ELK/ELK 之 nginx日志分析/" itemprop="url">
+                <a class="post-title-link" href="/2016/11/29/java高并发/Disruptor/disruptor学习教程(二)为什么快/" itemprop="url">
                   ELK 之 nginx日志分析（原创）
                 </a>
               
@@ -1820,8 +1820,8 @@
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2016/11/29/ELK/ELK 之 nginx日志分析/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/29/ELK/ELK 之 nginx日志分析/" itemprop="commentCount"></span>
+                <a href="/2016/11/29/java高并发/Disruptor/disruptor学习教程(二)为什么快/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/29/java高并发/Disruptor/disruptor学习教程(二)为什么快/" itemprop="commentCount"></span>
                 </a>
               </span>
             
