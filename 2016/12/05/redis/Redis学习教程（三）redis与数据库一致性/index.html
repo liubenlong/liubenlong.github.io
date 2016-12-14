@@ -94,7 +94,7 @@
 redis 内存数据集大小上升到一定大小的时候，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redis学习（二）redis内存淘汰策略.md">
-<meta property="og:url" content="ttp://liubenlong.github.io/2016/12/05/redis/Redis学习（二）redis缓存超额淘汰策略/index.html">
+<meta property="og:url" content="ttp://liubenlong.github.io/2016/12/05/redis/Redis学习教程（三）redis与数据库一致性/index.html">
 <meta property="og:site_name" content="快乐崇拜的技术博客">
 <meta property="og:description" content="本文讲的是 当redis设定了最大内存之后，缓存中的数据集大小超过了一定比例，实施的淘汰策略，不是删除过期键的策略，虽然两者非常相似。
 
@@ -134,7 +134,7 @@ redis 内存数据集大小上升到一定大小的时候，">
 
 
 
-  <link rel="canonical" href="ttp://liubenlong.github.io/2016/12/05/redis/Redis学习（二）redis缓存超额淘汰策略/"/>
+  <link rel="canonical" href="ttp://liubenlong.github.io/2016/12/05/redis/Redis学习教程（三）redis与数据库一致性/"/>
 
 
 
@@ -337,7 +337,7 @@ redis 内存数据集大小上升到一定大小的时候，">
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="ttp://liubenlong.github.io/2016/12/05/redis/Redis学习（二）redis缓存超额淘汰策略/">
+  <link itemprop="mainEntityOfPage" href="ttp://liubenlong.github.io/2016/12/05/redis/Redis学习教程（三）redis与数据库一致性/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="liubenlong">
@@ -408,8 +408,8 @@ redis 内存数据集大小上升到一定大小的时候，">
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2016/12/05/redis/Redis学习（二）redis缓存超额淘汰策略/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/05/redis/Redis学习（二）redis缓存超额淘汰策略/" itemprop="commentCount"></span>
+                <a href="/2016/12/05/redis/Redis学习教程（三）redis与数据库一致性/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/05/redis/Redis学习教程（三）redis与数据库一致性/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -478,12 +478,16 @@ redis 内存数据集大小上升到一定大小的时候，">
     <div>
       
         
+	<hr/>
   <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
     <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
-    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+	<div>本人原创文章会有“原创”字样，转发会标注“转发”以及出处</div>
+    <!-- <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}"> -->
+	<button id="rewardButton" disable="enable">
       <span>赏</span>
     </button>
-    <div id="QR" style="display: none;">
+<!--    <div id="QR" style="display: none;"> -->
+		<div id="QR">
       
         <div id="wechat" style="display: inline-block">
           <img id="wechat_qr" src="/pay/weixin.png" alt="liubenlong WeChat Pay"/>
@@ -517,8 +521,8 @@ redis 内存数据集大小上升到一定大小的时候，">
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/12/05/redis/Redis学习（一）redis3.2.5集群搭建/" rel="next" title="Redis学习（一）redis3.2.5集群搭建.md">
-                <i class="fa fa-chevron-left"></i> Redis学习（一）redis3.2.5集群搭建.md
+              <a href="/2016/12/05/redis/Redis学习教程（二）redis缓存超额淘汰策略/" rel="next" title="Redis学习（二）redis内存淘汰策略.md">
+                <i class="fa fa-chevron-left"></i> Redis学习（二）redis内存淘汰策略.md
               </a>
             
           </div>
@@ -527,8 +531,8 @@ redis 内存数据集大小上升到一定大小的时候，">
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/12/08/java高并发/akka/akka（二）helloword/" rel="prev" title="akka（二）helloword（原创）">
-                akka（二）helloword（原创） <i class="fa fa-chevron-right"></i>
+              <a href="/2016/12/05/redis/Redis学习教程（一）redis3.2.5集群搭建/" rel="prev" title="Redis学习（一）redis3.2.5集群搭建.md">
+                Redis学习（一）redis3.2.5集群搭建.md <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -545,7 +549,7 @@ redis 内存数据集大小上升到一定大小的时候，">
     <div class="post-spread">
       
         <!-- JiaThis Button BEGIN -->
-<div class="jiathis_style">
+<div class="jiathis_style_32x32">
   <a class="jiathis_button_tsina"></a>
   <a class="jiathis_button_tqq"></a>
   <a class="jiathis_button_weixin"></a>
@@ -581,8 +585,8 @@ redis 内存数据集大小上升到一定大小的时候，">
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/12/05/redis/Redis学习（二）redis缓存超额淘汰策略/"
-           data-title="Redis学习（二）redis内存淘汰策略.md" data-url="ttp://liubenlong.github.io/2016/12/05/redis/Redis学习（二）redis缓存超额淘汰策略/">
+      <div class="ds-thread" data-thread-key="2016/12/05/redis/Redis学习教程（三）redis与数据库一致性/"
+           data-title="Redis学习（二）redis内存淘汰策略.md" data-url="ttp://liubenlong.github.io/2016/12/05/redis/Redis学习教程（三）redis与数据库一致性/">
       </div>
     
   </div>
@@ -627,7 +631,7 @@ redis 内存数据集大小上升到一定大小的时候，">
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">12</span>
+              <span class="site-state-item-count">13</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
